@@ -1,0 +1,15 @@
+name: umiuni2d_sprite
+description: A starting point for Dart libraries or applications.
+version: 0.0.1
+#homepage: https://www.example.com
+#author: kyorohiro <email@example.com>
+
+environment:
+  sdk: '>=1.20.1 <2.0.0'
+
+
+dependencies:
+  vector_math: 2.0.5
+
+dev_dependencies:
+  test: ^0.12.0
