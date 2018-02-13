@@ -4,7 +4,7 @@ typedef Future OnStart(GameWidget widget);
 abstract class GameWidget {
   Stage _stage;
   Stage get stage => _stage;
-  void start({OnStart onStart});
+  void start({OnStart onStart, bool useAnimationLoop:false});
   void stop();
   void run();
 
