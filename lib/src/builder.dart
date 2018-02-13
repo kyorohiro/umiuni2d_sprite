@@ -1,9 +1,10 @@
 part of umiuni2d_sprite;
 
+typedef Future OnStart(GameWidget widget);
 abstract class GameWidget {
   Stage _stage;
   Stage get stage => _stage;
-  void start();
+  void start({OnStart onStart});
   void stop();
   void run();
 
