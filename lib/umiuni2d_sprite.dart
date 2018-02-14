@@ -19,7 +19,7 @@ part 'src/size.dart';
 part 'src/sprite.dart';
 part 'src/stage.dart';
 part 'src/stage_base.dart';
-part 'src/builder.dart';
+part 'src/widget.dart';
 
 
 abstract class Platform {
