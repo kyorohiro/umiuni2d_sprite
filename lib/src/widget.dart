@@ -1,11 +1,13 @@
 part of umiuni2d_sprite;
 
+typedef Future OnStart(GameWidget widget);
+typedef Future OnLoop(GameWidget widget);
 abstract class GameWidget {
   Stage _stage;
   Stage get stage => _stage;
-  void start();
-  void stop();
-  void run();
+
+  Future<GameWidget> start({OnStart onStart, OnLoop onLoop, bool useAnimationLoop:false});
+  Future<GameWidget> stop();
 
   Stage createStage({DisplayObject root});
   Future<double> getDisplayDensity();
