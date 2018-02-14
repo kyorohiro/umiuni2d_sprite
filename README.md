@@ -18,8 +18,3 @@ https://github.com/kyorohiro/umiuni2d_sprite_html5
 
 https://github.com/kyorohiro/umiuni2d_sprite_example
 
-
-# Plugin
-https://github.com/kyorohiro/umiuni2d_media
-
-https://github.com/kyorohiro/umiuni2d_io
