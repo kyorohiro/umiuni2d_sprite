@@ -26,7 +26,6 @@ class BitmapFontInfo {
     }
   }
 
-  Paint p = new Paint();
   drawText(Stage stage, Canvas canvas, Image fontImg, String text, double height, Rect rect, {BitmapFontInfoType vertical: BitmapFontInfoType.horizontal}) {
     Rect src = new Rect(0.0, 0.0, 0.0, 0.0);
     Rect dst = new Rect(0.0, 0.0, 0.0, 0.0);
@@ -49,7 +48,7 @@ class BitmapFontInfo {
         dst.x = rect.x;
         dst.y += height + 5;
       }
-      canvas.drawImageRect(stage, fontImg, src, dst, p);
+      canvas.drawImageRect(stage, fontImg, src, dst);
       x = dst.x + dst.w + 2;
       y = dst.y;
     }

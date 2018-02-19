@@ -4,43 +4,23 @@ abstract class CanvasRoze extends Canvas {
 
   double get contextWidht;
   double get contextHeight;
-  void drawVertex(List<double> svertex, List<int> index, Color color);
+
+  void drawVertexRaw(List<double> svertex, List<int> index);
   void clearClip(Stage stage);
   void clipRect(Stage stage, Rect rect, {Matrix4 m:null});
-
-
-
-  int _numOfCircleElm;
-  int get numOfCircleElm => _numOfCircleElm;
-  List<double> _circleCache = [];
-
-
-  void set numOfCircleElm(v) {
-    _numOfCircleElm = v;
-    for (int i = 0; i < _numOfCircleElm+1; i++) {
-      _circleCache.add(math.cos(2 * math.PI * (i / _numOfCircleElm)));
-      _circleCache.add(math.sin(2 * math.PI * (i / _numOfCircleElm)));
-    }
-  }
 
   int maxVertexTextureImageUnits = 3;
   CanvasRoze({int numOfCircleElm:16}) {
     this.numOfCircleElm = numOfCircleElm;
-    //1init();
-    //clear();
   }
 
-  void init() {
-  }
-
-  int stencilV = 1;
   List<double> flVert = [];
   List<int> flInde = [];
   List<double> flTex = [];
   Image flImg = null;
   double flZ = 0.0;
+
   void clear() {
-    stencilV = 1;
     flZ = -0.5;
     double r = 0.0;
     double g = 0.0;
@@ -55,11 +35,130 @@ abstract class CanvasRoze extends Canvas {
 
   void flush() {
     if (flVert.length != 0) {
-      drawVertex(flVert, flInde, new Color.argb(0xaa, 0xff, 0xaa, 0xaa));
+      drawVertexRaw(flVert, flInde);
       flVert.clear();
       flInde.clear();
       flTex.clear();
       flImg = null;
+    }
+  }
+
+  void updateMatrix() {}
+
+  Matrix4 cacheMatrix = new Matrix4.identity();
+
+  Matrix4 calcMat() {
+    cacheMatrix.setIdentity();
+    //cacheMatrix =
+    cacheMatrix.translate(-1.0, 1.0, 0.0);
+    //cacheMatrix =
+    cacheMatrix.scale(2.0 / contextWidht, -2.0 / contextHeight, 1.0);
+    cacheMatrix = cacheMatrix * getMatrix();
+    return cacheMatrix;
+  }
+
+
+  //
+  // template drawimage
+  //
+
+  void drawImageRect(Stage stage, Image image, Rect src, Rect dst,
+      {CanvasTransform transform: CanvasTransform.NONE,
+        List<Object> cache: null}) {
+
+    if (flImg != null && flImg != image) {
+      flush();
+    }
+    flImg = image;
+
+    double xs = src.x / flImg.w;
+    double ys = src.y / flImg.h;
+    double xe = (src.x + src.w) / flImg.w;
+    double ye = (src.y + src.h) / flImg.h;
+
+    switch (transform) {
+      case CanvasTransform.NONE:
+        flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
+        break;
+      case CanvasTransform.ROT90:
+        flTex.addAll([xs, ye, xe, ye, xs, ys, xe, ys]);
+        break;
+      case CanvasTransform.ROT180:
+        flTex.addAll([xe, ye, xe, ys, xs, ye, xs, ys]);
+        break;
+      case CanvasTransform.ROT270:
+        flTex.addAll([xe, ys, xs, ys, xe, ye, xs, ye]);
+        break;
+      case CanvasTransform.MIRROR:
+        flTex.addAll([xe, ys, xe, ye, xs, ys, xs, ye]);
+        break;
+      case CanvasTransform.MIRROR_ROT90:
+        flTex.addAll([xs, ys, xe, ys, xs, ye, xe, ye]);
+        break;
+      case CanvasTransform.MIRROR_ROT180:
+        flTex.addAll([xs, ye, xs, ys, xe, ye, xe, ys]);
+        break;
+      case CanvasTransform.MIRROR_ROT270:
+        flTex.addAll([xe, ye, xs, ye, xe, ys, xs, ys]);
+        break;
+      default:
+        flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
+    }
+
+    //
+    //
+    //
+    Matrix4 m = calcMat();
+    double sx = dst.x;
+    double sy = dst.y;
+    double ex = dst.x + dst.w;
+    double ey = dst.y + dst.h;
+
+    Vector3 ss1 = m * new Vector3(sx, sy, 0.0);
+    Vector3 ss2 = m * new Vector3(sx, ey, 0.0);
+    Vector3 ss3 = m * new Vector3(ex, sy, 0.0);
+    Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
+
+    int b = flVert.length ~/ 8;
+    double colorR = 0.0;//paint.color.r / 0xff;
+    double colorG = 0.0;//paint.color.g / 0xff;
+    double colorB = 0.0;//paint.color.b / 0xff;
+    double colorA = 0.0;//paint.color.a / 0xff;
+    flVert.addAll([
+      ss1.x, ss1.y, flZ, // 7
+      colorR, colorG, colorB, colorA, // color
+      1.0,
+      ss2.x, ss2.y, flZ, // 1
+      colorR, colorG, colorB, colorA, // color
+      1.0,
+      ss3.x, ss3.y, flZ, // 9
+      colorR, colorG, colorB, colorA, // color
+      1.0,
+      ss4.x, ss4.y, flZ, //3
+      colorR, colorG, colorB, colorA, // color
+      1.0
+    ]);
+    flZ += 0.0001;
+    //b= 0;
+    flInde.addAll([b + 0, b + 1, b + 2, b + 1, b + 3, b + 2]);
+  }
+
+  //
+  //
+  // template
+  //
+  //
+
+  int _numOfCircleElm;
+  int get numOfCircleElm => _numOfCircleElm;
+  List<double> _circleCache = [];
+
+
+  void set numOfCircleElm(v) {
+    _numOfCircleElm = v;
+    for (int i = 0; i < _numOfCircleElm+1; i++) {
+      _circleCache.add(math.cos(2 * math.PI * (i / _numOfCircleElm)));
+      _circleCache.add(math.sin(2 * math.PI * (i / _numOfCircleElm)));
     }
   }
 
@@ -274,102 +373,5 @@ abstract class CanvasRoze extends Canvas {
 
 
 
-  //bool a = false;
-  void drawImageRect(Stage stage, Image image, Rect src, Rect dst, Paint paint,
-      {CanvasTransform transform: CanvasTransform.NONE, List<Object> cache: null}) {
 
-    if (flImg != null && flImg != image) {
-      //TinyImage tmp = flImg;
-      flush();
-      // todo
-      //flImg.dispose();
-    }
-    flImg = image;
-
-    double xs = src.x / flImg.w;
-    double ys = src.y / flImg.h;
-    double xe = (src.x + src.w) / flImg.w;
-    double ye = (src.y + src.h) / flImg.h;
-    //print("############### ${xs} ${ys} ${xe} ${ye} ##############");
-    switch (transform) {
-      case CanvasTransform.NONE:
-        flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
-        break;
-      case CanvasTransform.ROT90:
-        flTex.addAll([xs, ye, xe, ye, xs, ys, xe, ys]);
-        break;
-      case CanvasTransform.ROT180:
-        flTex.addAll([xe, ye, xe, ys, xs, ye, xs, ys]);
-        break;
-      case CanvasTransform.ROT270:
-        flTex.addAll([xe, ys, xs, ys, xe, ye, xs, ye]);
-        break;
-      case CanvasTransform.MIRROR:
-        flTex.addAll([xe, ys, xe, ye, xs, ys, xs, ye]);
-        break;
-      case CanvasTransform.MIRROR_ROT90:
-        flTex.addAll([xs, ys, xe, ys, xs, ye, xe, ye]);
-        break;
-      case CanvasTransform.MIRROR_ROT180:
-        flTex.addAll([xs, ye, xs, ys, xe, ye, xe, ys]);
-        break;
-      case CanvasTransform.MIRROR_ROT270:
-        flTex.addAll([xe, ye, xs, ye, xe, ys, xs, ys]);
-        break;
-      default:
-        flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
-    }
-
-    //
-    //
-    //
-    Matrix4 m = calcMat();
-    double sx = dst.x;
-    double sy = dst.y;
-    double ex = dst.x + dst.w;
-    double ey = dst.y + dst.h;
-
-    Vector3 ss1 = m * new Vector3(sx, sy, 0.0);
-    Vector3 ss2 = m * new Vector3(sx, ey, 0.0);
-    Vector3 ss3 = m * new Vector3(ex, sy, 0.0);
-    Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
-
-    int b = flVert.length ~/ 8;
-    double colorR = paint.color.r / 0xff;
-    double colorG = paint.color.g / 0xff;
-    double colorB = paint.color.b / 0xff;
-    double colorA = paint.color.a / 0xff;
-    flVert.addAll([
-      ss1.x, ss1.y, flZ, // 7
-      colorR, colorG, colorB, colorA, // color
-      1.0,
-      ss2.x, ss2.y, flZ, // 1
-      colorR, colorG, colorB, colorA, // color
-      1.0,
-      ss3.x, ss3.y, flZ, // 9
-      colorR, colorG, colorB, colorA, // color
-      1.0,
-      ss4.x, ss4.y, flZ, //3
-      colorR, colorG, colorB, colorA, // color
-      1.0
-    ]);
-    flZ += 0.0001;
-    //b= 0;
-    flInde.addAll([b + 0, b + 1, b + 2, b + 1, b + 3, b + 2]);
-  }
-
-  void updateMatrix() {}
-
-
-  Matrix4 cacheMatrix = new Matrix4.identity();
-
-  Matrix4 calcMat() {
-    cacheMatrix.setIdentity();
-    //cacheMatrix =
-    cacheMatrix.translate(-1.0, 1.0, 0.0);
-    //cacheMatrix =
-    cacheMatrix.scale(2.0 / contextWidht, -2.0 / contextHeight, 1.0);
-    cacheMatrix = cacheMatrix * getMatrix();
-    return cacheMatrix;
-  }
 }

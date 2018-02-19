@@ -63,7 +63,6 @@ class Sprite extends DisplayObject {
   List<Rect> _src = [];
   List<Rect> _dst = [];
   List<CanvasTransform> _trans = [];
-  Paint _paint;
 
   Sprite.simple(this.image, {this.centerX, this.centerY, List<Rect> srcs, List<Rect> dsts, List<CanvasTransform> transforms}) {
     if (centerX == null) {
@@ -81,7 +80,6 @@ class Sprite extends DisplayObject {
       _dst.add(new Rect(0.0, 0.0, image.w.toDouble(), image.h.toDouble()));
       _trans.add(CanvasTransform.NONE);
     }
-    _paint = new Paint();
   }
 
   void updateMat() {
@@ -116,6 +114,6 @@ class Sprite extends DisplayObject {
     if (id >= _src.length) {
       id = _src.length - 1;
     }
-    canvas.drawImageRect(stage, image, _src[id], _dst[id], _paint, transform: _trans[id]);
+    canvas.drawImageRect(stage, image, _src[id], _dst[id], transform: _trans[id]);
   }
 }
