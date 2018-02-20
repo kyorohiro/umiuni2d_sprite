@@ -120,10 +120,16 @@ abstract class CanvasRoze extends Canvas {
     Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
 
     int b = flVert.length ~/ 8;
+    /*
     double colorR = 0.0;//paint.color.r / 0xff;
     double colorG = 0.0;//paint.color.g / 0xff;
     double colorB = 0.0;//paint.color.b / 0xff;
     double colorA = 0.0;//paint.color.a / 0xff;
+*/
+    double colorR = 1.0;
+    double colorG = 1.0;
+    double colorB = 1.0;
+    double colorA = 1.0;
     flVert.addAll([
       ss1.x, ss1.y, flZ, // 7
       colorR, colorG, colorB, colorA, // color
@@ -269,11 +275,13 @@ abstract class CanvasRoze extends Canvas {
   }
 
   void drawRect(Stage stage, Rect rect, Paint paint, {List<Object> cache: null}) {
+    flush();
     if (paint.style == PaintStyle.fill) {
       drawFillRect(stage, rect, paint);
     } else {
       drawStrokeRect(stage, rect, paint);
     }
+    flush();
   }
 
   void drawFillRect(Stage stage, Rect rect, Paint paint,{Matrix4 m:null}) {
