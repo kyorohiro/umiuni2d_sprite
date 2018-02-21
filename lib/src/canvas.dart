@@ -6,18 +6,44 @@ enum CanvasTransform { NONE, ROT90, ROT180, ROT270, MIRROR, MIRROR_ROT90, MIRROR
 abstract class Canvas {
   void clipRect(Stage stage, Rect rect, {Matrix4 m: null});
   void clearClip(Stage stage);
-  void drawRect(Stage stage, Rect rect, Paint paint, {List<Object> cache: null});
-  void drawImageRect(Stage stage, Image image, Rect src, Rect dst, {CanvasTransform transform, List<Object> cache: null});
+
+  DrawingShell ds;
+  Canvas(double width, double height) {
+    ds = new DrawingShell(width, height);
+  }
+
   List<Matrix4> mats = [new Matrix4.identity()];
   List<Rect> stockClipRect = [];
   List<Matrix4> stockClipMat = [];
 
+  void drawVertexWithColor(List<double> positions, List<double> colors, List<int> indices,{bool hasZ:false});
+  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, Image img,
+      {List<double> colors, bool hasZ:false});
+
+
+  void drawImageRect(Stage stage, Image image, Rect src, Rect dst, {CanvasTransform transform, List<Object> cache: null}) {
+    ds.currentMatrix = mats.last;
+    ds.drawImageRect(stage, image, src, dst);
+  }
+
+  void drawRect(Stage stage, Rect rect, Paint paint, {List<Object> cache: null}){
+    ds.currentMatrix = mats.last;
+    ds.drawRect(rect, paint);
+  }
+
   clear() {
-    ;
   }
 
   flush() {
-    ;
+    ds.flush();
+    for(DrawingShellItem item in ds.infos) {
+      if(item.flImg == null) {
+        this.drawVertexWithColor(item.flVert, item.flColor, item.flInde);
+      } else {
+        this.drawVertexWithImage(item.flVert, item.flTex, item.flInde, item.flImg, colors:item.flColor);
+      }
+    }
+    ds.infos.clear();
   }
 
   pushMulMatrix(Matrix4 mat) {
@@ -50,6 +76,8 @@ abstract class Canvas {
       clearClip(stage);
     }
   }
+
+
 //
 //
 }

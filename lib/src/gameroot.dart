@@ -52,6 +52,7 @@ class GameRoot extends DisplayObject {
 //    canvas.popMatrix();
   }
 
+
   void onPaint(Stage stage, Canvas canvas) {
     Rect rect = new Rect(0.0, 0.0, w, h);
     Paint paint = new Paint();
