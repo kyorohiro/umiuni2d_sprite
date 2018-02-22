@@ -60,7 +60,7 @@ abstract class Canvas {
     return mats.last;
   }
 
-  void updateMatrix();
+  void updateMatrix() {;}
 
   void pushClipRect(Stage stage, Rect rect) {
     stockClipRect.add(rect);
