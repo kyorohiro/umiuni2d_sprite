@@ -4,8 +4,8 @@ part of umiuni2d_sprite;
 enum CanvasTransform { NONE, ROT90, ROT180, ROT270, MIRROR, MIRROR_ROT90, MIRROR_ROT180, MIRROR_ROT270, }
 
 abstract class Canvas {
-  void clipRect(Stage stage, Rect rect, {Matrix4 m: null});
-  void clearClip(Stage stage);
+  void clipRect(Rect rect, {Matrix4 m: null});
+  void clearClip();
 
   DrawingShell ds;
   Canvas(double width, double height) {
@@ -34,7 +34,7 @@ abstract class Canvas {
     ds.drawImageRect(image, src, dst);
   }
 
-  void drawRect(Stage stage, Rect rect, Paint paint, {List<Object> cache: null}){
+  void drawRect(Rect rect, Paint paint, {List<Object> cache: null}){
     ds.currentMatrix = mats.last;
     ds.drawRect(rect, paint);
   }
@@ -70,18 +70,18 @@ abstract class Canvas {
 
   void updateMatrix() {;}
 
-  void pushClipRect(Stage stage, Rect rect) {
+  void pushClipRect(Rect rect) {
     stockClipRect.add(rect);
     stockClipMat.add(getMatrix());
-    clipRect(stage, rect);
+    clipRect(rect);
   }
 
-  void popClipRect(Stage stage) {
+  void popClipRect() {
     stockClipRect.removeLast();
     if (stockClipRect.length > 0) {
-      clipRect(stage, stockClipRect.last, m: stockClipMat.last);
+      clipRect(stockClipRect.last, m: stockClipMat.last);
     } else {
-      clearClip(stage);
+      clearClip();
     }
   }
 

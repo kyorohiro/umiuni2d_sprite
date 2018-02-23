@@ -39,11 +39,11 @@ class GameRoot extends DisplayObject {
   void paint(Stage stage, Canvas canvas) {
     Rect rect = new Rect(0.0, 0.0, w, h);
     if (isClipRect == true) {
-      canvas.pushClipRect(stage, rect);
+      canvas.pushClipRect(rect);
     }
     super.paint(stage, canvas);
     if (isClipRect == true) {
-      canvas.popClipRect(stage);
+      canvas.popClipRect();
     }
   }
 
@@ -52,6 +52,6 @@ class GameRoot extends DisplayObject {
     Rect rect = new Rect(0.0, 0.0, w, h);
     Paint paint = new Paint();
     paint.color = backgroundColor;
-    canvas.drawRect(stage, rect, paint);
+    canvas.drawRect(rect, paint);
   }
 }
