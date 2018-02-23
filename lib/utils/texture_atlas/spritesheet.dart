@@ -16,7 +16,7 @@ abstract class SpriteSheet {
 
   void drawImage(Stage stage, Canvas canvas, Image image, String name) {
     if (this[name] != null) {
-      canvas.drawImageRect(stage, image, this[name].srcRect, this[name].dstRect);
+      canvas.drawImageRect(image, this[name].srcRect, this[name].dstRect);
     }
   }
 
@@ -52,7 +52,7 @@ abstract class SpriteSheet {
           dstRect.y = y;
         }
       }
-      canvas.drawImageRect(stage, image, d.srcRect, dstRect);
+      canvas.drawImageRect(image, d.srcRect, dstRect);
       x += dstRect.w + margine * d.srcRect.w / d.srcRect.h;
     }
   }
@@ -92,7 +92,7 @@ abstract class SpriteSheet {
           dstRect.y = y;
         }
       }
-      canvas.drawImageRect(stage, image, d.srcRect, dstRect);
+      canvas.drawImageRect(image, d.srcRect, dstRect);
       y += dstRect.h + margine;
     }
   }

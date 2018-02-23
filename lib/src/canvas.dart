@@ -17,13 +17,21 @@ abstract class Canvas {
   List<Matrix4> stockClipMat = [];
 
   void drawVertexWithColor(List<double> positions, List<double> colors, List<int> indices,{bool hasZ:false});
-  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, Image img,
-      {List<double> colors, bool hasZ:false});
+  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, Image img, {List<double> colors, bool hasZ:false});
 
-
-  void drawImageRect(Stage stage, Image image, Rect src, Rect dst, {CanvasTransform transform, List<Object> cache: null}) {
+  void drawLine(Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
     ds.currentMatrix = mats.last;
-    ds.drawImageRect(stage, image, src, dst);
+    ds.drawLine(p1, p2, paint);
+  }
+
+  void drawOval(Rect rect, Paint paint, {List<Object> cache: null}) {
+    ds.currentMatrix = mats.last;
+    ds.drawOval(rect, paint);
+  }
+
+  void drawImageRect(Image image, Rect src, Rect dst, {CanvasTransform transform, List<Object> cache: null}) {
+    ds.currentMatrix = mats.last;
+    ds.drawImageRect(image, src, dst);
   }
 
   void drawRect(Stage stage, Rect rect, Paint paint, {List<Object> cache: null}){

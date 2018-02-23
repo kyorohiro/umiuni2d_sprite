@@ -114,6 +114,6 @@ class Sprite extends DisplayObject {
     if (id >= _src.length) {
       id = _src.length - 1;
     }
-    canvas.drawImageRect(stage, image, _src[id], _dst[id], transform: _trans[id]);
+    canvas.drawImageRect(image, _src[id], _dst[id], transform: _trans[id]);
   }
 }

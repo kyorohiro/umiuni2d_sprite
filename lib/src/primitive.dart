@@ -22,13 +22,16 @@ class DrawingShell {
 
   List<DrawingShellItem> infos = [];
 
-  DrawingShell(this.contextWidht, this.contextHeight, { maxVertexTextureImageUnits:3});
+  DrawingShell(this.contextWidht, this.contextHeight, { maxVertexTextureImageUnits:3}) {
+    numOfCircleElm = 10;
+  }
 
   List<double> flVert = [];
   List<double> flColor = [];
   List<int> flInde = [];
   List<double> flTex = [];
   Image flImg = null;
+
 
   void clear() {
     flVert.clear();
@@ -304,7 +307,7 @@ class DrawingShell {
 
 
 
-  void drawImageRect(Stage stage, Image image, Rect src, Rect dst,
+  void drawImageRect(Image image, Rect src, Rect dst,
       {CanvasTransform transform: CanvasTransform.NONE,
         List<Object> cache: null}) {
     if (flImg != image) {
