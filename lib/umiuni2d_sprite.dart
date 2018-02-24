@@ -7,7 +7,6 @@ import 'dart:typed_data';
 import 'dart:math' as math;
 //
 part 'src/canvas.dart';
-part 'src/canvas_roze.dart';
 part 'src/color.dart';
 part 'src/displayobject.dart';
 part 'src/gameroot.dart';
@@ -20,7 +19,7 @@ part 'src/sprite.dart';
 part 'src/stage.dart';
 part 'src/stage_base.dart';
 part 'src/widget.dart';
-
+part 'src/primitive.dart';
 
 abstract class Platform {
   Future<double> getDisplayDensity();

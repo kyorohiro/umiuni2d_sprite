@@ -14,10 +14,9 @@ abstract class SpriteSheet {
     return new BitmapFont(json, w, h);
   }
 
-  Paint p = new Paint();
   void drawImage(Stage stage, Canvas canvas, Image image, String name) {
     if (this[name] != null) {
-      canvas.drawImageRect(stage, image, this[name].srcRect, this[name].dstRect, p);
+      canvas.drawImageRect(image, this[name].srcRect, this[name].dstRect);
     }
   }
 
@@ -53,7 +52,7 @@ abstract class SpriteSheet {
           dstRect.y = y;
         }
       }
-      canvas.drawImageRect(stage, image, d.srcRect, dstRect, p);
+      canvas.drawImageRect(image, d.srcRect, dstRect);
       x += dstRect.w + margine * d.srcRect.w / d.srcRect.h;
     }
   }
@@ -93,7 +92,7 @@ abstract class SpriteSheet {
           dstRect.y = y;
         }
       }
-      canvas.drawImageRect(stage, image, d.srcRect, dstRect, p);
+      canvas.drawImageRect(image, d.srcRect, dstRect);
       y += dstRect.h + margine;
     }
   }

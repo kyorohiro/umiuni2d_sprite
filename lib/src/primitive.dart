@@ -1,14 +1,86 @@
+//
+// use http://sapphire-al2o3.github.io/font_tex/
+//
 part of umiuni2d_sprite;
 
-abstract class CanvasRoze extends Canvas {
+class DrawingShellItem {
+  List<double> flVert = [];
+  List<double> flColor = [];
+  List<int> flInde = [];
+  List<double> flTex = [];
+  Image flImg = null;
+}
 
-  double get contextWidht;
-  double get contextHeight;
-  void drawVertex(List<double> svertex, List<int> index, Color color);
-  void clearClip(Stage stage);
-  void clipRect(Stage stage, Rect rect, {Matrix4 m:null});
+
+class DrawingShell {
+  Matrix4 currentMatrix = new Matrix4.identity();
+  Matrix4 cacheMatrix = new Matrix4.identity();
+
+  double contextWidht;
+  double contextHeight;
+  int maxVertexTextureImageUnits;
+
+  List<DrawingShellItem> infos = [];
+
+  DrawingShell(this.contextWidht, this.contextHeight, { maxVertexTextureImageUnits:3}) {
+    numOfCircleElm = 10;
+  }
+
+  List<double> flVert = [];
+  List<double> flColor = [];
+  List<int> flInde = [];
+  List<double> flTex = [];
+  Image flImg = null;
 
 
+  void clear() {
+    flVert.clear();
+    flInde.clear();
+    flTex.clear();
+    flImg = null;
+  }
+
+  DrawingShellItem flush() {
+    if (flVert.length != 0) {
+
+      infos.add(new DrawingShellItem()
+      ..flVert = flVert
+      ..flImg = flImg
+      ..flTex = flTex
+      ..flInde = flInde
+      ..flColor = flColor);
+      flVert = [];
+      flInde = [];
+      flColor = [];
+      flTex = [];
+      flImg = null;
+    }
+    if(infos.length <= 0) {
+      return new DrawingShellItem();
+    } else {
+      return infos.last;
+    }
+  }
+
+
+  Matrix4 calcMat() {
+    cacheMatrix.setIdentity();
+    cacheMatrix.translate(-1.0, 1.0, 0.0);
+    cacheMatrix.scale(2.0 / contextWidht, -2.0 / contextHeight, 1.0);
+    cacheMatrix = cacheMatrix * getMatrix();
+    return cacheMatrix;
+  }
+
+  Matrix4 getMatrix() {
+    return currentMatrix;
+  }
+
+
+  //
+  //
+  // template
+  //
+  //
 
   int _numOfCircleElm;
   int get numOfCircleElm => _numOfCircleElm;
@@ -23,55 +95,21 @@ abstract class CanvasRoze extends Canvas {
     }
   }
 
-  int maxVertexTextureImageUnits = 3;
-  CanvasRoze({int numOfCircleElm:16}) {
-    this.numOfCircleElm = numOfCircleElm;
-    //1init();
-    //clear();
-  }
-
-  void init() {
-  }
-
-  int stencilV = 1;
-  List<double> flVert = [];
-  List<int> flInde = [];
-  List<double> flTex = [];
-  Image flImg = null;
-  double flZ = 0.0;
-  void clear() {
-    stencilV = 1;
-    flZ = -0.5;
-    double r = 0.0;
-    double g = 0.0;
-    double b = 0.0;
-    double a = 1.0;
-
-    flVert.clear();
-    flInde.clear();
-    flTex.clear();
-    flImg = null;
-  }
-
-  void flush() {
-    if (flVert.length != 0) {
-      drawVertex(flVert, flInde, new Color.argb(0xaa, 0xff, 0xaa, 0xaa));
-      flVert.clear();
-      flInde.clear();
-      flTex.clear();
-      flImg = null;
+  void drawOval(Rect rect, Paint paint, {List<Object> cache: null}) {
+    if (flImg != null) {
+      flush();
     }
-  }
-
-  void drawOval(Stage stage, Rect rect, Paint paint, {List<Object> cache: null}) {
     if (paint.style == PaintStyle.fill) {
-      drawFillOval(stage, rect, paint);
+      drawFillOval(rect, paint);
     } else {
-      drawStrokeOval(stage, rect, paint);
+      drawStrokeOval(rect, paint);
     }
   }
 
-  void drawFillOval(Stage stage, Rect rect, Paint paint) {
+  void drawFillOval(Rect rect, Paint paint) {
+    if (flImg != null) {
+      flush();
+    }
     double cx = rect.x + rect.w / 2.0;
     double cy = rect.y + rect.h / 2.0;
     double a = rect.w / 2;
@@ -86,44 +124,38 @@ abstract class CanvasRoze extends Canvas {
 
     for (int i = 0; i < _numOfCircleElm; i++) {
       //
-      int bbb = flVert.length ~/ 8;
+      int bbb = flVert.length ~/ 2;
 
       //
       s.x = cx;
       s.y = cy;
-      s.z = flZ;
       s = m * s;
-      flVert.addAll([s.x, s.y, flZ]);
-      flVert.addAll([colorR, colorG, colorB, colorA]);
-      flVert.addAll([-1.0]);
-      flTex.addAll([0.0, 0.0]);
+      flVert.addAll([s.x, s.y]);
+      flColor.addAll([colorR, colorG, colorB, colorA]);
+
+      //
       //
       s.x = cx + _circleCache[i*2+0] * a;
       s.y = cy + _circleCache[i*2+1] * b;
-      s.z = flZ;
       s = m * s;
-      flVert.addAll([s.x, s.y, flZ]);
-      flVert.addAll([colorR, colorG, colorB, colorA]);
-      flVert.addAll([-1.0]);
-      flTex.addAll([0.0, 0.0]);
+      flVert.addAll([s.x, s.y]);
+      flColor.addAll([colorR, colorG, colorB, colorA]);
 
+      //
       //
       s.x = cx + _circleCache[i*2+2] * a;
       s.y = cy + _circleCache[i*2+3] * b;
-      s.z = flZ;
       s = m * s;
-      flVert.addAll([s.x, s.y, flZ]);
-      flVert.addAll([colorR, colorG, colorB, colorA]);
-      flVert.addAll([-1.0]);
-      flTex.addAll([0.0, 0.0]);
-
+      flVert.addAll([s.x, s.y]);
+      flColor.addAll([colorR, colorG, colorB, colorA]);
       flInde.addAll([bbb + 0, bbb + 1, bbb + 2]);
-
-      flZ += 0.0001;
     }
   }
 
-  void drawStrokeOval(Stage stage, Rect rect, Paint paint) {
+  void drawStrokeOval(Rect rect, Paint paint) {
+    if (flImg != null) {
+      flush();
+    }
     double cx = rect.x + rect.w / 2.0;
     double cy = rect.y + rect.h / 2.0;
     double a = (rect.w + paint.strokeWidth) / 2;
@@ -140,44 +172,42 @@ abstract class CanvasRoze extends Canvas {
     double colorG = paint.color.g / 0xff;
     double colorB = paint.color.b / 0xff;
     double colorA = paint.color.a / 0xff;
-    for (int i = 0; i < numOfCircleElm; i++) {
-      //
 
-      //
+    for (int i = 0; i < numOfCircleElm; i++) {
       s1.x = cx + _circleCache[i*2+0] * c;
       s1.y = cy + _circleCache[i*2+1] * d;
-      s1.z = flZ;
       s1 = m * s1;
 
       s2.x = cx + _circleCache[i*2+0] * a;
       s2.y = cy + _circleCache[i*2+1] * b;
-      s2.z = flZ;
       s2 = m * s2;
 
       s3.x = cx + _circleCache[i*2+2] * a;
       s3.y = cy + _circleCache[i*2+3] * b;
-      s3.z = flZ;
       s3 = m * s3;
 
       s4.x = cx + _circleCache[i*2+2] * c;
       s4.y = cy + _circleCache[i*2+3] * d;
-      s4.z = flZ;
       s4 = m * s4;
-      _innerDrawFillRect(stage, s1, s2, s4, s3, colorR, colorG, colorB, colorA);
-
-      flZ += 0.0001;
+      _innerDrawFillRect(s1, s2, s4, s3, colorR, colorG, colorB, colorA);
     }
   }
 
-  void drawRect(Stage stage, Rect rect, Paint paint, {List<Object> cache: null}) {
+  void drawRect(Rect rect, Paint paint, {List<Object> cache: null}) {
+    if (flImg != null) {
+      flush();
+    }
     if (paint.style == PaintStyle.fill) {
-      drawFillRect(stage, rect, paint);
+      drawFillRect(rect, paint);
     } else {
-      drawStrokeRect(stage, rect, paint);
+      drawStrokeRect(rect, paint);
     }
   }
 
-  void drawFillRect(Stage stage, Rect rect, Paint paint,{Matrix4 m:null}) {
+  void drawFillRect(Rect rect, Paint paint,{Matrix4 m:null}) {
+    if (flImg != null) {
+      flush();
+    }
     if(m == null) {
       m = calcMat();
     }
@@ -194,31 +224,13 @@ abstract class CanvasRoze extends Canvas {
     double colorG = paint.color.g / 0xff;
     double colorB = paint.color.b / 0xff;
     double colorA = paint.color.a / 0xff;
-    _innerDrawFillRect(stage, ss1, ss2, ss3, ss4, colorR, colorG, colorB, colorA);
+    _innerDrawFillRect(ss1, ss2, ss3, ss4, colorR, colorG, colorB, colorA);
   }
 
-  void _innerDrawFillRect(Stage stage, Vector3 ss1, Vector3 ss2, Vector3 ss3, Vector3 ss4, double colorR, double colorG, double colorB, double colorA) {
-    int b = flVert.length ~/ 8;
-    flVert.addAll([
-      ss1.x, ss1.y, flZ, // 7
-      colorR, colorG, colorB, colorA, // color
-      -1.0,
-      ss2.x, ss2.y, flZ, // 1
-      colorR, colorG, colorB, colorA, // color
-      -1.0,
-      ss3.x, ss3.y, flZ, // 9
-      colorR, colorG, colorB, colorA, // color
-      -1.0,
-      ss4.x, ss4.y, flZ, //3
-      colorR, colorG, colorB, colorA, // color
-      -1.0
-    ]);
-    flTex.addAll([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]);
-    flZ += 0.0001;
-    flInde.addAll([b + 0, b + 1, b + 2, b + 1, b + 3, b + 2]);
-  }
-
-  void drawStrokeRect(Stage stage, Rect rect, Paint paint) {
+  void drawStrokeRect(Rect rect, Paint paint) {
+    if (flImg != null) {
+      flush();
+    }
     Matrix4 m = calcMat();
     double sx = rect.x + paint.strokeWidth / 2;
     double sy = rect.y + paint.strokeWidth / 2;
@@ -237,17 +249,18 @@ abstract class CanvasRoze extends Canvas {
     double colorG = paint.color.g / 0xff;
     double colorB = paint.color.b / 0xff;
     double colorA = paint.color.a / 0xff;
-    _innerDrawFillRect(stage, sz1, sz2, ss1, ss2, colorR, colorG, colorB, colorA);
-    _innerDrawFillRect(stage, sz2, sz4, ss2, ss4, colorR, colorG, colorB, colorA);
-    _innerDrawFillRect(stage, sz4, sz3, ss4, ss3, colorR, colorG, colorB, colorA);
-    _innerDrawFillRect(stage, sz3, sz1, ss3, ss1, colorR, colorG, colorB, colorA);
+    _innerDrawFillRect(sz1, sz2, ss1, ss2, colorR, colorG, colorB, colorA);
+    _innerDrawFillRect(sz2, sz4, ss2, ss4, colorR, colorG, colorB, colorA);
+    _innerDrawFillRect(sz4, sz3, ss4, ss3, colorR, colorG, colorB, colorA);
+    _innerDrawFillRect(sz3, sz1, ss3, ss1, colorR, colorG, colorB, colorA);
   }
 
   Matrix4 baseMat = new Matrix4.identity();
 
-
-
-  void drawLine(Stage stage, Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
+  void drawLine(Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
+    if (flImg != null) {
+      flush();
+    }
     Matrix4 m = calcMat();
     double d = math.sqrt(math.pow(p1.x - p2.x, 2) + math.pow(p1.y - p2.y, 2));
     double dy = -1 * paint.strokeWidth * (p2.x - p1.x) / (d * 2);
@@ -269,20 +282,36 @@ abstract class CanvasRoze extends Canvas {
     double colorG = paint.color.g / 0xff;
     double colorB = paint.color.b / 0xff;
     double colorA = paint.color.a / 0xff;
-    _innerDrawFillRect(stage, v1, v2, v3, v4, colorR, colorG, colorB, colorA);
+    _innerDrawFillRect(v1, v2, v3, v4, colorR, colorG, colorB, colorA);
+  }
+
+
+  void _innerDrawFillRect(
+      Vector3 ss1, Vector3 ss2, Vector3 ss3, Vector3 ss4,
+      double colorR, double colorG, double colorB, double colorA) {
+    int b = flVert.length ~/ 2;
+    flVert.addAll([
+      ss1.x, ss1.y, // 7
+      ss2.x, ss2.y, // 1
+      ss3.x, ss3.y, // 9
+      ss4.x, ss4.y, //3
+    ]);
+    flColor.addAll([
+      colorR, colorG, colorB, colorA, // 7 color
+      colorR, colorG, colorB, colorA, // 1 color
+      colorR, colorG, colorB, colorA, // 9 color
+      colorR, colorG, colorB, colorA, // 3 color
+    ]);
+    flInde.addAll([b + 0, b + 1, b + 2, b + 1, b + 3, b + 2]);
   }
 
 
 
-  //bool a = false;
-  void drawImageRect(Stage stage, Image image, Rect src, Rect dst, Paint paint,
-      {CanvasTransform transform: CanvasTransform.NONE, List<Object> cache: null}) {
-
-    if (flImg != null && flImg != image) {
-      //TinyImage tmp = flImg;
+  void drawImageRect(Image image, Rect src, Rect dst,
+      {CanvasTransform transform: CanvasTransform.NONE,
+        List<Object> cache: null}) {
+    if (flImg != image) {
       flush();
-      // todo
-      //flImg.dispose();
     }
     flImg = image;
 
@@ -290,7 +319,7 @@ abstract class CanvasRoze extends Canvas {
     double ys = src.y / flImg.h;
     double xe = (src.x + src.w) / flImg.w;
     double ye = (src.y + src.h) / flImg.h;
-    //print("############### ${xs} ${ys} ${xe} ${ye} ##############");
+
     switch (transform) {
       case CanvasTransform.NONE:
         flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
@@ -334,42 +363,31 @@ abstract class CanvasRoze extends Canvas {
     Vector3 ss3 = m * new Vector3(ex, sy, 0.0);
     Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
 
-    int b = flVert.length ~/ 8;
-    double colorR = paint.color.r / 0xff;
-    double colorG = paint.color.g / 0xff;
-    double colorB = paint.color.b / 0xff;
-    double colorA = paint.color.a / 0xff;
+
+    int b = flVert.length ~/ 2;
+    /*
+    double colorR = 0.0;//paint.color.r / 0xff;
+    double colorG = 0.0;//paint.color.g / 0xff;
+    double colorB = 0.0;//paint.color.b / 0xff;
+    double colorA = 0.0;//paint.color.a / 0xff;
+*/
+    double colorR = 1.0;
+    double colorG = 1.0;
+    double colorB = 1.0;
+    double colorA = 1.0;
     flVert.addAll([
-      ss1.x, ss1.y, flZ, // 7
-      colorR, colorG, colorB, colorA, // color
-      1.0,
-      ss2.x, ss2.y, flZ, // 1
-      colorR, colorG, colorB, colorA, // color
-      1.0,
-      ss3.x, ss3.y, flZ, // 9
-      colorR, colorG, colorB, colorA, // color
-      1.0,
-      ss4.x, ss4.y, flZ, //3
-      colorR, colorG, colorB, colorA, // color
-      1.0
+      ss1.x, ss1.y, // 7
+      ss2.x, ss2.y, // 1
+      ss3.x, ss3.y, // 9
+      ss4.x, ss4.y, //3
     ]);
-    flZ += 0.0001;
-    //b= 0;
+
+    flColor.addAll([
+      colorR, colorG, colorB, colorA, // color
+      colorR, colorG, colorB, colorA, // color
+      colorR, colorG, colorB, colorA, // color
+      colorR, colorG, colorB, colorA, // color
+    ]);
     flInde.addAll([b + 0, b + 1, b + 2, b + 1, b + 3, b + 2]);
-  }
-
-  void updateMatrix() {}
-
-
-  Matrix4 cacheMatrix = new Matrix4.identity();
-
-  Matrix4 calcMat() {
-    cacheMatrix.setIdentity();
-    //cacheMatrix =
-    cacheMatrix.translate(-1.0, 1.0, 0.0);
-    //cacheMatrix =
-    cacheMatrix.scale(2.0 / contextWidht, -2.0 / contextHeight, 1.0);
-    cacheMatrix = cacheMatrix * getMatrix();
-    return cacheMatrix;
   }
 }

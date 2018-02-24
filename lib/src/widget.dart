@@ -15,4 +15,5 @@ abstract class GameWidget {
   Future<Image> loadImage(String path);
   Future<Uint8List> loadBytes(String path);
   Future<String> getLocale();
+
 }

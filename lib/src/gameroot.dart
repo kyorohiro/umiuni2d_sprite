@@ -28,11 +28,8 @@ class GameRoot extends DisplayObject {
     mat.scale(radio, radio, 1.0);
   }
 
-  bool touch(Stage stage, DisplayObject parent, int id, StagePointerType type,
-      double x, double y) {
-    //  stage.pushMulMatrix(mat);
+  bool touch(Stage stage, DisplayObject parent, int id, StagePointerType type, double x, double y) {
     return super.touch(stage, parent, id, type, x, y);
-    //stage.popMatrix();
   }
 
   void onTick(Stage stage, int timeStamp) {
@@ -41,21 +38,20 @@ class GameRoot extends DisplayObject {
 
   void paint(Stage stage, Canvas canvas) {
     Rect rect = new Rect(0.0, 0.0, w, h);
-//    canvas.pushMulMatrix(mat);
     if (isClipRect == true) {
-      canvas.pushClipRect(stage, rect);
+      canvas.pushClipRect(rect);
     }
     super.paint(stage, canvas);
     if (isClipRect == true) {
-      canvas.popClipRect(stage);
+      canvas.popClipRect();
     }
-//    canvas.popMatrix();
   }
+
 
   void onPaint(Stage stage, Canvas canvas) {
     Rect rect = new Rect(0.0, 0.0, w, h);
     Paint paint = new Paint();
     paint.color = backgroundColor;
-    canvas.drawRect(stage, rect, paint);
+    canvas.drawRect(rect, paint);
   }
 }
