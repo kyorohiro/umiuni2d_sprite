@@ -16,8 +16,8 @@ abstract class Canvas {
   List<Rect> stockClipRect = [];
   List<Matrix4> stockClipMat = [];
 
-  void drawVertexWithColor(List<double> positions, List<double> colors, List<int> indices,{bool hasZ:false});
-  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, Image img, {List<double> colors, bool hasZ:false});
+  void drawVertexWithColor(List<double> positions, List<double> colors, List<int> indices, {bool hasZ:false});
+  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, Image image, {List<double> colors, bool hasZ:false});
 
   void drawLine(Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
     ds.currentMatrix = mats.last;
