@@ -8,16 +8,18 @@ abstract class Canvas {
   void clearClip();
 
   DrawingShell ds;
-  Canvas(double width, double height) {
-    ds = new DrawingShell(width, height);
+  Canvas(double width, double height, bool useLengthHAtCCoordinates) {
+    ds = new DrawingShell(width, height, useLengthHAtCCoordinates: useLengthHAtCCoordinates);
   }
 
   List<Matrix4> mats = [new Matrix4.identity()];
   List<Rect> stockClipRect = [];
   List<Matrix4> stockClipMat = [];
 
-  void drawVertexWithColor(List<double> positions, List<double> colors, List<int> indices, {bool hasZ:false});
-  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, ImageShader imageShader, {List<double> colors, bool hasZ:false});
+  void drawVertexWithColor(Vertices verties, {bool hasZ:false});
+  void drawVertexWithImage(Vertices verties, ImageShader imageShader);
+  Vertices createVertices(List<double> positions, List<double> colors, List<int> indices,
+      {List<double> cCoordinates});
 
   //
   //
@@ -54,7 +56,7 @@ abstract class Canvas {
     ds.flush();
     for(DrawingShellItem item in ds.infos) {
       if(item.flImg == null) {
-        this.drawVertexWithColor(item.flVert, item.flColor, item.flInde);
+        this.drawVertexWithColor(createVertices(item.flVert, item.flColor, item.flInde));
       } else {
         ImageShader s = null;
         if(ims.containsKey(item.flImg )) {
@@ -63,7 +65,7 @@ abstract class Canvas {
           s = this.createImageShader(item.flImg);
           ims[item.flImg] = s;
         }
-        this.drawVertexWithImage(item.flVert, item.flTex, item.flInde, s, colors:item.flColor);
+        this.drawVertexWithImage(createVertices(item.flVert, item.flColor, item.flInde, cCoordinates: item.flTex), s);
       }
     }
     ds.infos.clear();
@@ -106,19 +108,6 @@ abstract class Canvas {
 }
 
 
+class Vertices {
 
-enum VertexMode {
-  triangles,
-  triangleStrip,
-  triangleFan,
 }
-
-abstract class Vertices {
-    Vertices.list(
-      VertexMode mode,
-      List<double> positions, {
-        List<double> cCoordinates,
-        List<int> colors,
-        List<int> indices,
-      });
-  }
