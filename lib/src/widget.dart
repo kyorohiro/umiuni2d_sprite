@@ -22,5 +22,7 @@ abstract class GameWidget {
 }
 
 class ImageShader {
+  int get w => 0;
+  int get h => 0;
   void dispose(){;}
 }

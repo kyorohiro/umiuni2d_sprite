@@ -17,7 +17,13 @@ abstract class Canvas {
   List<Matrix4> stockClipMat = [];
 
   void drawVertexWithColor(List<double> positions, List<double> colors, List<int> indices, {bool hasZ:false});
-  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, Image image, {List<double> colors, bool hasZ:false});
+  void drawVertexWithImage(List<double> positions, List<double> cCoordinates, List<int> indices, ImageShader imageShader, {List<double> colors, bool hasZ:false});
+
+  //
+  //
+  void setupImages(List<Image> images) {
+
+  }
 
   void drawLine(Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
     ds.currentMatrix = mats.last;
@@ -42,13 +48,22 @@ abstract class Canvas {
   clear() {
   }
 
+  ImageShader createImageShader(Image image);
+  Map<Image, ImageShader> ims = {};
   flush() {
     ds.flush();
     for(DrawingShellItem item in ds.infos) {
       if(item.flImg == null) {
         this.drawVertexWithColor(item.flVert, item.flColor, item.flInde);
       } else {
-        this.drawVertexWithImage(item.flVert, item.flTex, item.flInde, item.flImg, colors:item.flColor);
+        ImageShader s = null;
+        if(ims.containsKey(item.flImg )) {
+          s = ims[item.flImg ];
+        } else{
+          s = this.createImageShader(item.flImg);
+          ims[item.flImg] = s;
+        }
+        this.drawVertexWithImage(item.flVert, item.flTex, item.flInde, s, colors:item.flColor);
       }
     }
     ds.infos.clear();
