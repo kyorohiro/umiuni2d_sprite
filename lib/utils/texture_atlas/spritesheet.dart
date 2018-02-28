@@ -14,21 +14,21 @@ abstract class SpriteSheet {
     return new BitmapFont(json, w, h);
   }
 
-  void drawImage(Stage stage, Canvas canvas, Image image, String name) {
+  void drawImage(Canvas canvas, Image image, String name) {
     if (this[name] != null) {
       canvas.drawImageRect(image, this[name].srcRect, this[name].dstRect);
     }
   }
 
-  void drawText(Stage stage, Canvas canvas, Image image, String text, double size, {Rect rect: null, BitmapFontInfoType orientation: BitmapFontInfoType.horizontal, double margine: 5.0}) {
+  void drawText(Canvas canvas, Image image, String text, double size, {Rect rect: null, BitmapFontInfoType orientation: BitmapFontInfoType.horizontal, double margine: 5.0}) {
     if(orientation == BitmapFontInfoType.horizontal) {
-      drawTextHorizontal(stage, canvas, image, text, size, rect: rect, margine: margine);
+      drawTextHorizontal(canvas, image, text, size, rect: rect, margine: margine);
     } else {
-      drawTextVertical(stage, canvas, image, text, size, rect: rect, margine: margine);
+      drawTextVertical(canvas, image, text, size, rect: rect, margine: margine);
     }
   }
 
-  void drawTextHorizontal(Stage stage, Canvas canvas, Image image, String text, double size, {Rect rect: null, double margine: 5.0}) {
+  void drawTextHorizontal(Canvas canvas, Image image, String text, double size, {Rect rect: null, double margine: 5.0}) {
     if(rect == null) {
       rect = new Rect(0.0,0.0,10000.0,10000.0);
     }
@@ -58,7 +58,7 @@ abstract class SpriteSheet {
   }
 
   //
-  void drawTextVertical(Stage stage, Canvas canvas, Image image, String text, double size,
+  void drawTextVertical(Canvas canvas, Image image, String text, double size,
       {Rect rect: null, double margine: 5.0}) {
     if(rect == null) {
       rect = new Rect(0.0,0.0,10000.0,10000.0);

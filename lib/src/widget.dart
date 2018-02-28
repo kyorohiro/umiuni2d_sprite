@@ -15,5 +15,14 @@ abstract class GameWidget {
   Future<Image> loadImage(String path);
   Future<Uint8List> loadBytes(String path);
   Future<String> getLocale();
+  //
+  // size 2048 x 2048
+  // num of 4.
+  Future<ImageShader> createImageShader(Image image);
+}
 
+class ImageShader {
+  int get w => 0;
+  int get h => 0;
+  void dispose(){;}
 }

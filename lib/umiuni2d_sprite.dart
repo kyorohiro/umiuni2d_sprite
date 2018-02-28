@@ -19,7 +19,7 @@ part 'src/sprite.dart';
 part 'src/stage.dart';
 part 'src/stage_base.dart';
 part 'src/widget.dart';
-part 'src/primitive.dart';
+part 'src/drawingshell.dart';
 
 abstract class Platform {
   Future<double> getDisplayDensity();

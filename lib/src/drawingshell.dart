@@ -18,11 +18,11 @@ class DrawingShell {
 
   double contextWidht;
   double contextHeight;
-  int maxVertexTextureImageUnits;
-
   List<DrawingShellItem> infos = [];
 
-  DrawingShell(this.contextWidht, this.contextHeight, { maxVertexTextureImageUnits:3}) {
+  bool useLengthHAtCCoordinates;
+
+  DrawingShell(this.contextWidht, this.contextHeight, { this.useLengthHAtCCoordinates:false}) {
     numOfCircleElm = 10;
   }
 
@@ -315,11 +315,10 @@ class DrawingShell {
     }
     flImg = image;
 
-    double xs = src.x / flImg.w;
-    double ys = src.y / flImg.h;
-    double xe = (src.x + src.w) / flImg.w;
-    double ye = (src.y + src.h) / flImg.h;
-
+    double xs = src.x / (!this.useLengthHAtCCoordinates?flImg.w:1.0);
+    double ys = src.y / (!this.useLengthHAtCCoordinates?flImg.h:1.0);
+    double xe = (src.x + src.w) / (!this.useLengthHAtCCoordinates?flImg.w:1.0);
+    double ye = (src.y + src.h) / (!this.useLengthHAtCCoordinates?flImg.h:1.0);
     switch (transform) {
       case CanvasTransform.NONE:
         flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
