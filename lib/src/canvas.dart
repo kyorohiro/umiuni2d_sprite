@@ -4,8 +4,13 @@ part of umiuni2d_sprite;
 enum CanvasTransform { NONE, ROT90, ROT180, ROT270, MIRROR, MIRROR_ROT90, MIRROR_ROT180, MIRROR_ROT270, }
 
 abstract class Canvas {
-  void clipRect(Rect rect, {Matrix4 m: null});
+
   void clearClip();
+  void clipVertex(Vertices vertices);
+  void drawVertexWithColor(Vertices verties, {bool hasZ:false});
+  void drawVertexWithImage(Vertices verties, ImageShader imageShader);
+  Vertices createVertices(List<double> positions, List<double> colors, List<int> indices, {List<double> cCoordinates});
+
 
   DrawingShell ds;
   Canvas(double width, double height, bool useLengthHAtCCoordinates) {
@@ -16,15 +21,33 @@ abstract class Canvas {
   List<Rect> stockClipRect = [];
   List<Matrix4> stockClipMat = [];
 
-  void drawVertexWithColor(Vertices verties, {bool hasZ:false});
-  void drawVertexWithImage(Vertices verties, ImageShader imageShader);
-  Vertices createVertices(List<double> positions, List<double> colors, List<int> indices,
-      {List<double> cCoordinates});
 
   //
   //
   void setupImages(List<Image> images) {
 
+  }
+
+  void clipRect(Rect rect, {Matrix4 m:null}) {
+    if(m == null) {
+      m = getMatrix();
+    }
+    ds.currentMatrix = m;
+    m = ds.calcMat();
+
+    Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
+    Vector3 v2 = new Vector3(rect.x, rect.y + rect.h, 0.0);
+    Vector3 v3 = new Vector3(rect.x + rect.w, rect.y + rect.h, 0.0);
+    Vector3 v4 = new Vector3(rect.x + rect.w, rect.y, 0.0);
+    v1 = m * v1;
+    v2 = m * v2;
+    v3 = m * v3;
+    v4 = m * v4;
+//    canvas.clipPath(path);
+    clipVertex(createVertices(
+        <double> [v1.x, v1.y,v2.x, v2.y, v3.x, v3.y,v4.x, v4.y],
+        <double>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        <int>[0,1,2, 0,2,3]));
   }
 
   void drawLine(Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
