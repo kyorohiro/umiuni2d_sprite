@@ -32,6 +32,12 @@ abstract class Stage {
   DisplayObject get root;
   void set root(DisplayObject v);
 
+  DisplayObject get background;
+  void set background(DisplayObject v);
+
+  DisplayObject get front;
+  void set front(DisplayObject v);
+
   GameWidget get builder;
   bool animeIsStart = false;
   int animeId = 0;

@@ -95,6 +95,7 @@ class DrawingShell {
     }
   }
 
+
   void drawOval(Rect rect, Paint paint, {List<Object> cache: null}) {
     if (flImg != null) {
       flush();
