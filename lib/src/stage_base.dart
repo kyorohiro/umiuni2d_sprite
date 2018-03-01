@@ -19,9 +19,7 @@ class StageBase {
 
   void _updateChild() {
     _group.clearChild();
-    if(_background != null) {
-      _group.addChilds([_background, _root, _front]);
-    }
+    _group.addChilds([_background, _root, _front]);
   }
 
   void set root(DisplayObject v) {
