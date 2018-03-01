@@ -84,13 +84,20 @@ class Sprite extends DisplayObject {
   List<Rect> _dst = [];
   List<CanvasTransform> _trans = [];
 
-  Sprite.empty({double w, double h, Color color}) {
+  Sprite.empty({double w:0.0, double h:0.0, Color color}) {
     _spriteH = h;
     _spriteW = w;
     _src.add(new Rect(0.0, 0.0, w, h));
     _dst.add(new Rect(0.0, 0.0, w, h));
     _trans.add(CanvasTransform.NONE);
     _color = color;
+
+    if (centerX == null) {
+      centerX = _spriteW / 2;
+    }
+    if (centerY == null) {
+      centerY = _spriteH / 2;
+    }
   }
 
   Sprite.simple(this.image, {this.centerX, this.centerY, List<Rect> srcs, List<Rect> dsts, List<CanvasTransform> transforms}) {
