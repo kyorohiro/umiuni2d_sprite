@@ -4,6 +4,8 @@ class DisplayObject {
   String objectName = "none";
   List<DisplayObject> child = [];
   Matrix4 mat = new Matrix4.identity();
+  Stage _currentStage = null;
+
 
   DisplayObject({this.child: null}) {
     if (child == null) {
@@ -29,6 +31,10 @@ class DisplayObject {
     for(DisplayObject d in ds) {
       if(d != null) {
         child.add(d);
+        //
+        if(_isInit == false && _currentStage != null) {
+          init(_currentStage);
+        }
       }
     }
   }
@@ -36,6 +42,9 @@ class DisplayObject {
   Future addChild(DisplayObject d) async {
     await new Future.value();
     child.add(d);
+    if(_isInit == false && _currentStage != null) {
+      init(_currentStage);
+    }
   }
 
   Future rmChild(DisplayObject d) async {
@@ -60,7 +69,9 @@ class DisplayObject {
     }
   }
 
-  void onInit(Stage stage) {}
+  void onInit(Stage stage) {
+    _isInit = true;
+  }
 
   void init(Stage stage) {
     onInit(stage);
@@ -116,24 +127,36 @@ class DisplayObject {
 
   void onTouchEnd(Stage stage, int id, StagePointerType type, double x, double y) {}
 
-  void onUnattach() {}
+  void onUnattach() {
+    _currentStage = null;
+  }
 
   void unattach() {
     onUnattach();
     for (DisplayObject d in child) {
       d.unattach();
     }
-    isAttach = false;
+    _isAttach = false;
   }
 
-  void onAttach(Stage stage, DisplayObject parent) {}
-  attachCheck(Stage stage, DisplayObject parent) {
+  void onAttach(Stage stage, DisplayObject parent) {
+    _currentStage = stage;
+  }
+
+  void attachCheck(Stage stage, DisplayObject parent) {
+    if(_isInit == false) {
+      _isInit = true;
+      init(stage);
+    }
     if(isAttach == false) {
-      isAttach = true;
+      _isAttach = true;
       onAttach(stage, parent);
     }
   }
-  bool isAttach = false;
+
+  bool _isAttach = false;
+  bool get isAttach => _isAttach;
+  bool _isInit = false;
 
   //
   //
