@@ -4,7 +4,7 @@ part of umiuni2d_sprite;
 class StageBase {
   Stage thisStage;
   StageBase(this.thisStage) {
-    _background = new DisplayObject();
+    _background = new GameBackground();
     _front = new DisplayObject();
     _root = new DisplayObject();
   }
