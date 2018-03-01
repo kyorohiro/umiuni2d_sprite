@@ -4,7 +4,7 @@ class DisplayObject {
   String objectName = "none";
   List<DisplayObject> child = [];
   Matrix4 mat = new Matrix4.identity();
-
+  
   DisplayObject({this.child: null}) {
     if (child == null) {
       child = [];
