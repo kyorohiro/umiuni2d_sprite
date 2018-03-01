@@ -5,11 +5,14 @@ class Sprite extends DisplayObject {
   double centerX;
   double centerY;
 
+
   double _x = 0.0;
   double _y = 0.0;
   double _rotation = 0.0;
   double _scaleX = 1.0;
   double _scaleY = 1.0;
+  double _spriteW;
+  double _spriteH;
 
   double get x => _x;
   double get y => _y;
@@ -17,22 +20,39 @@ class Sprite extends DisplayObject {
   double get scaleX => _scaleX;
   double get scaleY => _scaleY;
 
-//
-  double get w => image.w * scaleX;
-  double get h => image.h * scaleY;
+  double get spriteW => _spriteW;
+  double get spriteH => _spriteH;
+
+  //
+  double get w => _spriteW * scaleX;
+  double get h => _spriteH * scaleY;
+
+  //
+  Color _color = new Color.argb(0xff, 0xff, 0xff, 0xff);
+  Color get color => _color;
+
   void updateScaleW(double w, {bool isScaleY: true}) {
-    scaleX = w / image.w;
+    scaleX = w / _spriteW;
     scaleY = scaleY;
   }
 
   void updateScaleH(double h, {bool isScaleX: true}) {
-    scaleY = h / image.h;
+    scaleY = h / _spriteH;
     scaleX = scaleY;
   }
 
 //
   bool _update = true;
-  int currentFrameID = 0;
+  int _currentFrameID = 0;
+  int get currentFrameID => _currentFrameID;
+  void set currentFrameID(int v) {
+    if(_dst.length < v) {
+      return;
+    }
+    _currentFrameID = v;
+    _spriteW = _dst[v].w.toDouble();
+    _spriteH = _dst[v].h.toDouble();
+  }
   int get numOfFrameID => _src.length;
 
   void set x(double v) {
@@ -64,12 +84,27 @@ class Sprite extends DisplayObject {
   List<Rect> _dst = [];
   List<CanvasTransform> _trans = [];
 
+  Sprite.empty({double w, double h, Color color}) {
+    _spriteH = h;
+    _spriteW = w;
+    _src.add(new Rect(0.0, 0.0, w, h));
+    _dst.add(new Rect(0.0, 0.0, w, h));
+    _trans.add(CanvasTransform.NONE);
+    _color = color;
+  }
+
   Sprite.simple(this.image, {this.centerX, this.centerY, List<Rect> srcs, List<Rect> dsts, List<CanvasTransform> transforms}) {
+    _spriteW = image.w.toDouble();
+    _spriteH = image.h.toDouble();
+
+    if(dsts.length > 0 && srcs.length > 0) {
+      currentFrameID = 0;
+    }
     if (centerX == null) {
-      centerX = image.w / 2;
+      centerX = _spriteW / 2;
     }
     if (centerY == null) {
-      centerY = image.h / 2;
+      centerY = _spriteH / 2;
     }
     if (srcs != null && dsts != null && transforms != null && srcs.length == dsts.length && srcs.length == transforms.length && srcs.length > 0) {
       _src.addAll(srcs);
@@ -97,8 +132,8 @@ class Sprite extends DisplayObject {
   bool checkFocus(double localX, double localY) {
     updateMat();
 //    print("--${localX}:${localY}, ${image.w}:${image.h}a");
-    if (0 < localX && localX < image.w) {
-      if (0 < localY && localY < image.h) {
+    if (0 < localX && localX < _spriteW) {
+      if (0 < localY && localY < _spriteH) {
         return true;
       }
     }
@@ -114,6 +149,10 @@ class Sprite extends DisplayObject {
     if (id >= _src.length) {
       id = _src.length - 1;
     }
-    canvas.drawImageRect(image, _src[id], _dst[id], transform: _trans[id]);
+    if(image == null) {
+      canvas.drawRect(_dst[id], new Paint(color: color));
+    } else {
+      canvas.drawImageRect(image, _src[id], _dst[id], transform: _trans[id]);
+    }
   }
 }
