@@ -66,15 +66,6 @@ abstract class Stage {
 
   popMatrix();
 
-  Matrix4 getMatrix() ;
-
-  double get xFromMat;
-  double get yFromMat;
-  double get zFromMat;
-  double get sxFromMat;
-  double get syFromMat;
-  double get szFromMat;
-
   Vector3 getCurrentPositionOnDisplayObject(double globalX, double globalY) ;
 
 }

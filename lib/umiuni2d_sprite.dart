@@ -9,7 +9,6 @@ import 'dart:math' as math;
 part 'src/canvas.dart';
 part 'src/color.dart';
 part 'src/displayobject.dart';
-part 'src/gameroot.dart';
 part 'src/image.dart';
 part 'src/paint.dart';
 part 'src/point.dart';
@@ -20,6 +19,9 @@ part 'src/stage.dart';
 part 'src/stage_base.dart';
 part 'src/widget.dart';
 part 'src/drawingshell.dart';
+
+part 'src/gameroot.dart';
+part 'src/gamebackground.dart';
 
 abstract class Platform {
   Future<double> getDisplayDensity();

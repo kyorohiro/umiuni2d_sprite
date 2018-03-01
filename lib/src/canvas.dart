@@ -45,7 +45,7 @@ abstract class Canvas {
     v4 = m * v4;
 //    canvas.clipPath(path);
     clipVertex(createVertices(
-        <double> [v1.x, v1.y,v2.x, v2.y, v3.x, v3.y,v4.x, v4.y],
+        <double>[v1.x, v1.y,v2.x, v2.y, v3.x, v3.y,v4.x, v4.y],
         <double>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
         <int>[0,1,2, 0,2,3]));
   }
