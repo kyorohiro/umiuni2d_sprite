@@ -9,7 +9,7 @@ abstract class GameWidget {
   Future<GameWidget> start({OnStart onStart, OnLoop onLoop, bool useAnimationLoop:false});
   Future<GameWidget> stop();
 
-  Stage createStage({DisplayObject root});
+  Stage createStage({DisplayObject root,DisplayObject background,DisplayObject front});
   Future<double> getDisplayDensity();
   Future<String> loadString(String path);
   Future<Image> loadImage(String path);

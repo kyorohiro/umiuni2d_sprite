@@ -23,9 +23,9 @@ class GameRoot extends DisplayObject {
     radio = (ratioW < ratioH ? ratioW : ratioH);
     t = stage.paddingTop;
     l = (stage.w - (w * radio)) / 2 + stage.paddingLeft;
-    mat = new Matrix4.identity();
-    mat.translate(l, t, 0.0);
-    mat.scale(radio, radio, 1.0);
+    this.mat = new Matrix4.identity();
+    this.mat.translate(l, t, 0.0);
+    this.mat.scale(radio, radio, 1.0);
   }
 
   bool touch(Stage stage, DisplayObject parent, int id, StagePointerType type, double x, double y) {
@@ -46,7 +46,6 @@ class GameRoot extends DisplayObject {
       canvas.popClipRect();
     }
   }
-
 
   void onPaint(Stage stage, Canvas canvas) {
     Rect rect = new Rect(0.0, 0.0, w, h);

@@ -4,7 +4,7 @@ class DisplayObject {
   String objectName = "none";
   List<DisplayObject> child = [];
   Matrix4 mat = new Matrix4.identity();
-  
+
   DisplayObject({this.child: null}) {
     if (child == null) {
       child = [];
@@ -22,6 +22,15 @@ class DisplayObject {
       }
     }
     return null;
+  }
+
+  Future addChilds(List<DisplayObject> ds) async {
+    await new Future.value();
+    for(DisplayObject d in ds) {
+      if(d != null) {
+        child.add(d);
+      }
+    }
   }
 
   Future addChild(DisplayObject d) async {

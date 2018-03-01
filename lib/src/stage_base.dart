@@ -3,10 +3,9 @@ part of umiuni2d_sprite;
 
 class StageBase {
   Stage thisStage;
-  StageBase(this.thisStage) {
-    _background = new GameBackground();
-    _front = new DisplayObject();
-    _root = new DisplayObject();
+  DisplayObject _group = new DisplayObject();
+  StageBase(this.thisStage, this._root, this._background, this._front) {
+    _updateChild();
   }
 
 
@@ -18,45 +17,46 @@ class StageBase {
   DisplayObject get background => _background;
   DisplayObject get front => _front;
 
+  void _updateChild() {
+    _group.clearChild();
+    if(_background != null) {
+      _group.addChilds([_background, _root, _front]);
+    }
+  }
+
   void set root(DisplayObject v) {
     _root = v;
+    _updateChild();
   }
 
   void set background(DisplayObject v) {
     _background = v;
+    _updateChild();
   }
 
   void set front(DisplayObject v) {
     _front = v;
+    _updateChild();
   }
 
   void kick(int timeStamp) {
     if (thisStage.isInit == false) {
-      _background.init(thisStage);
-      _root.init(thisStage);
-      _front.init(thisStage);
+      _group.init(thisStage);
       thisStage.isInit = true;
     }
-    _background.tick(thisStage, null, timeStamp);
-    _root.tick(thisStage, null, timeStamp);
-    _front.tick(thisStage, null, timeStamp);
+    _group.tick(thisStage, null, timeStamp);
 
     //markPaint();
   }
 
   void kickPaint(Stage stage, Canvas canvas) {
-    canvas.pushMulMatrix(root.mat);
-    _background.paint(stage, canvas);
-    _root.paint(stage, canvas);
-    _front.paint(stage, canvas);
-    canvas.popMatrix();
+    canvas.mats = [new Matrix4.identity()];
+    _group.paint(stage, canvas);
   }
 
   void kickTouch(Stage stage, int id, StagePointerType type, double x, double y) {
     stage.pushMulMatrix(root.mat);
-    _background.touch(stage, null, id, type, x, y);
-    _root.touch(stage, null, id, type, x, y);
-    _front.touch(stage, null, id, type, x, y);
+    _group.touch(stage, null, id, type, x, y);
     stage.popMatrix();
   }
 
