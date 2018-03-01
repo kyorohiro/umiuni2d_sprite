@@ -11,6 +11,18 @@ class GameBackground extends DisplayObject {
   }
 
   void updatePosition(Stage stage, int timeStamp) {
+    double w = stage.w;
+    double h = stage.h;
+    double radio = 1.0;
+    double ratioW = 1.0;//(stage.w - (stage.paddingLeft + stage.paddingRight)) / w;
+    double ratioH = 1.0;//(stage.h - (stage.paddingTop + stage.paddingBottom)) / h;
+    radio = (ratioW < ratioH ? ratioW : ratioH);
+    double t = stage.paddingTop;
+    double l = (stage.w - (w * radio)) / 2 + stage.paddingLeft;
+    this.mat = new Matrix4.identity();
+    this.mat.translate(l, t, 0.0);
+    //this.mat.scale(radio, radio, 1.0);
+
     _backgroundRect.x = 0.0;
     _backgroundRect.y = 0.0;
     _backgroundRect.w = stage.w;
@@ -24,6 +36,7 @@ class GameBackground extends DisplayObject {
   void onTick(Stage stage, int timeStamp) {
     updatePosition(stage, timeStamp);
   }
+
 
   void onPaint(Stage stage, Canvas canvas) {
     Paint paint = new Paint();
