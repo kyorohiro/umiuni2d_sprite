@@ -137,7 +137,7 @@ abstract class Canvas {
     stockColors.add(c);
   }
 
-  void popColor(int c) {
+  void popColor() {
     if(stockColors.length >0) {
       stockColors.removeLast();
     }

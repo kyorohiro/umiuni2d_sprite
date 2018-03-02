@@ -22,6 +22,7 @@ part 'src/drawingshell.dart';
 
 part 'src/gameroot.dart';
 part 'src/gamebackground.dart';
+part 'src/scene.dart';
 
 abstract class Platform {
   Future<double> getDisplayDensity();
