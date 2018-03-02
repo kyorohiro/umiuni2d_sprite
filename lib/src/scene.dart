@@ -21,6 +21,8 @@ class Scene extends DisplayObject {
     if (endColor == null) {
       _endColor = _beginColor;
       _duration = 0;
+    } else {
+      _endColor = endColor;
     }
   }
 
@@ -31,7 +33,7 @@ class Scene extends DisplayObject {
       _beginTImeStamp = timeStamp;
     }
     int t = timeStamp - _beginTImeStamp;
-    if (t > 0) {
+    if (_duration > t) {
       double da =
           (_endColor.af - _beginColor.af) * (t / _duration) + _beginColor.af;
       double dr =
@@ -41,10 +43,11 @@ class Scene extends DisplayObject {
       double db =
           (_endColor.bf - _beginColor.bf) * (t / _duration) + _beginColor.bf;
       _currentColor.value = 0;
-      _currentColor.value |= da.toInt() & 0xff << 24;
-      _currentColor.value |= dr.toInt() & 0xff << 16;
-      _currentColor.value |= dg.toInt() & 0xff << 8;
-      _currentColor.value |= db.toInt() & 0xff << 0;
+      _currentColor.value |= ((da*0xff).toInt() & 0xff) << 24;
+      _currentColor.value |= (dr*0xff).toInt() << 16;
+      _currentColor.value |= (dg*0xff).toInt() << 8;
+      _currentColor.value |= (db*0xff).toInt() << 0;
+      print(">> ${_currentColor} ${da} ${ (da*0xff).toInt() << 24}");
     } else {
       _currentColor = _endColor;
     }
