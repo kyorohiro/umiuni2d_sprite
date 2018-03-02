@@ -5,6 +5,7 @@ import 'package:vector_math/vector_math_64.dart';
 //import 'util.dart';
 import 'dart:typed_data';
 import 'dart:math' as math;
+import 'dart:convert' as conv;
 //
 part 'src/canvas.dart';
 part 'src/color.dart';
@@ -14,7 +15,7 @@ part 'src/paint.dart';
 part 'src/point.dart';
 part 'src/rect.dart';
 part 'src/size.dart';
-part 'src/sprite.dart';
+part 'package:umiuni2d_sprite/utils/sprites/sprite.dart';
 part 'src/stage.dart';
 part 'src/stage_base.dart';
 part 'src/widget.dart';
@@ -22,7 +23,22 @@ part 'src/drawingshell.dart';
 
 part 'src/gameroot.dart';
 part 'src/gamebackground.dart';
-part 'src/scene.dart';
+part 'package:umiuni2d_sprite/utils/sprites/scene.dart';
+
+//
+//
+//
+
+
+//part 'tinygame_ex/controller/button.dart';
+//part 'tinygame_ex/controller/joystick.dart';
+part 'utils/texture_atlas/spritesheet.dart';
+part 'utils/texture_atlas/spritesheetinfo.dart';
+part 'utils/texture_atlas/bitmapfont.dart';
+part 'utils/sprites/bitmaptext.dart';
+part 'utils/sprites/displayobject_ex.dart';
+part 'utils/sprites/exbutton.dart';
+
 
 abstract class Platform {
   Future<double> getDisplayDensity();

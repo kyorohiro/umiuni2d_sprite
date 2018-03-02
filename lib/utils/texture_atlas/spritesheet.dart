@@ -1,4 +1,4 @@
-part of tinygame_ex;
+part of umiuni2d_sprite;
 
 abstract class SpriteSheet {
   Iterable<Object> get keys;

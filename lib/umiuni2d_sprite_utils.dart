@@ -1,6 +1,6 @@
 library tinygame_ex;
 
-
+/*
 import 'dart:async';
 import 'dart:math'as math;
 import 'dart:convert' as conv;
@@ -14,6 +14,8 @@ import 'umiuni2d_sprite.dart';
 part 'utils/texture_atlas/spritesheet.dart';
 part 'utils/texture_atlas/spritesheetinfo.dart';
 part 'utils/texture_atlas/bitmapfont.dart';
-part 'package:umiuni2d_sprite/utils/sprites/bitmaptext.dart';
+part 'utils/sprites/bitmaptext.dart';
+part 'utils/sprites/displayobject_ex.dart';
+part 'utils/sprites/exbutton.dart';
 
-
+*/

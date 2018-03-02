@@ -1,7 +1,7 @@
 //
 // use http://sapphire-al2o3.github.io/font_tex/
 //
-part of tinygame_ex;
+part of umiuni2d_sprite;
 
 enum BitmapFontInfoType { vertical, horizontal }
 
