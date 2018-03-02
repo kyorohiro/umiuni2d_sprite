@@ -104,9 +104,6 @@ class Sprite extends DisplayObject {
     _spriteW = image.w.toDouble();
     _spriteH = image.h.toDouble();
 
-    if(dsts.length > 0 && srcs.length > 0) {
-      currentFrameID = 0;
-    }
     if (centerX == null) {
       centerX = _spriteW / 2;
     }
@@ -121,6 +118,9 @@ class Sprite extends DisplayObject {
       _src.add(new Rect(0.0, 0.0, image.w.toDouble(), image.h.toDouble()));
       _dst.add(new Rect(0.0, 0.0, image.w.toDouble(), image.h.toDouble()));
       _trans.add(CanvasTransform.NONE);
+    }
+    if(dsts.length > 0 && srcs.length > 0) {
+      currentFrameID = 0;
     }
   }
 
