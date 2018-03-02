@@ -38,7 +38,7 @@ abstract class Stage {
   DisplayObject get front;
   void set front(DisplayObject v);
 
-  GameWidget get builder;
+  GameWidget get context;
   bool animeIsStart = false;
   int animeId = 0;
   bool startable = false;
