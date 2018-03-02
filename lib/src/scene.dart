@@ -34,14 +34,10 @@ class Scene extends DisplayObject {
     }
     int t = timeStamp - _beginTImeStamp;
     if (_duration > t) {
-      double da =
-          (_endColor.af - _beginColor.af) * (t / _duration) + _beginColor.af;
-      double dr =
-          (_endColor.rf - _beginColor.rf) * (t / _duration) + _beginColor.rf;
-      double dg =
-          (_endColor.gf - _beginColor.gf) * (t / _duration) + _beginColor.gf;
-      double db =
-          (_endColor.bf - _beginColor.bf) * (t / _duration) + _beginColor.bf;
+      double da = (_endColor.af - _beginColor.af) * (t / _duration) + _beginColor.af;
+      double dr = (_endColor.rf - _beginColor.rf) * (t / _duration) + _beginColor.rf;
+      double dg = (_endColor.gf - _beginColor.gf) * (t / _duration) + _beginColor.gf;
+      double db = (_endColor.bf - _beginColor.bf) * (t / _duration) + _beginColor.bf;
       _currentColor.value = 0;
       _currentColor.value |= ((da*0xff).toInt() & 0xff) << 24;
       _currentColor.value |= (dr*0xff).toInt() << 16;

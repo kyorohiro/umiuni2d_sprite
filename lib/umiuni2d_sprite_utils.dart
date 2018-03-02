@@ -14,6 +14,6 @@ import 'umiuni2d_sprite.dart';
 part 'utils/texture_atlas/spritesheet.dart';
 part 'utils/texture_atlas/spritesheetinfo.dart';
 part 'utils/texture_atlas/bitmapfont.dart';
-part 'utils/texture_atlas/sprte_bitmaptext.dart';
+part 'package:umiuni2d_sprite/utils/sprites/bitmaptext.dart';
 
 
