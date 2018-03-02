@@ -1,6 +1,6 @@
 part of umiuni2d_sprite;
 
-class Sprite extends DisplayObject {
+class Sprite extends DisplayObjectEx {
   Image image;
   double centerX;
   double centerY;
