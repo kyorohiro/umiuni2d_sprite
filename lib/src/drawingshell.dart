@@ -372,6 +372,7 @@ class DrawingShell {
     double colorG = currentColor.gf;
     double colorB = currentColor.bf;
     double colorA = currentColor.af;
+
     if(paint != null) {
       colorR *= paint.color.r / 0xff;
       colorG *= paint.color.g / 0xff;

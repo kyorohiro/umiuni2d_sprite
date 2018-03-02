@@ -152,6 +152,7 @@ class Sprite extends DisplayObjectEx {
   }
 
   void onPaint(Stage stage, Canvas canvas) {
+
     int id = currentFrameID;
     if (id >= _src.length) {
       id = _src.length - 1;
@@ -161,5 +162,6 @@ class Sprite extends DisplayObjectEx {
     } else {
       canvas.drawImageRect(image, _src[id], _dst[id], transform: _trans[id]);
     }
+
   }
 }
