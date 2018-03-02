@@ -20,6 +20,7 @@ abstract class Canvas {
   List<Matrix4> mats = [new Matrix4.identity()];
   List<Rect> stockClipRect = [];
   List<Matrix4> stockClipMat = [];
+  List<Color> stockColors = [];
 
 
   //
@@ -52,21 +53,25 @@ abstract class Canvas {
 
   void drawLine(Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
     ds.currentMatrix = mats.last;
+    ds.currentColor = getColor();
     ds.drawLine(p1, p2, paint);
   }
 
   void drawOval(Rect rect, Paint paint, {List<Object> cache: null}) {
     ds.currentMatrix = mats.last;
+    ds.currentColor = getColor();
     ds.drawOval(rect, paint);
   }
 
   void drawImageRect(Image image, Rect src, Rect dst, {CanvasTransform transform, Paint paint:null, List<Object> cache: null}) {
     ds.currentMatrix = mats.last;
+    ds.currentColor = getColor();
     ds.drawImageRect(image, src, dst, transform:transform, paint: paint);
   }
 
   void drawRect(Rect rect, Paint paint, {List<Object> cache: null}){
     ds.currentMatrix = mats.last;
+    ds.currentColor = getColor();
     ds.drawRect(rect, paint);
   }
 
@@ -125,8 +130,28 @@ abstract class Canvas {
     }
   }
 
+  void pushColor(Color c) {
+    if(stockColors.length > 0) {
+      c = new Color.mul(stockColors.last, c);
+    }
+    stockColors.add(c);
+  }
 
-//
+  void popColor(int c) {
+    if(stockColors.length >0) {
+      stockColors.removeLast();
+    }
+  }
+
+  Color getColor() {
+    if(stockColors.length > 0) {
+      return stockColors.last;
+    } else {
+      return Color.white;
+    }
+  }
+
+  //
 //
 }
 

@@ -14,6 +14,8 @@ class DrawingShellItem {
 
 class DrawingShell {
   Matrix4 currentMatrix = new Matrix4.identity();
+  Color currentColor = new Color(0xffffffff);
+
   Matrix4 cacheMatrix = new Matrix4.identity();
 
   double contextWidht;
@@ -118,10 +120,10 @@ class DrawingShell {
 
     Matrix4 m = calcMat();
     Vector3 s = new Vector3(0.0, 0.0, 0.0);
-    double colorR = paint.color.r / 0xff;
-    double colorG = paint.color.g / 0xff;
-    double colorB = paint.color.b / 0xff;
-    double colorA = paint.color.a / 0xff;
+    double colorR = currentColor.rf * paint.color.r / 0xff;
+    double colorG = currentColor.gf * paint.color.g / 0xff;
+    double colorB = currentColor.bf * paint.color.b / 0xff;
+    double colorA = currentColor.af * paint.color.a / 0xff;
 
     for (int i = 0; i < _numOfCircleElm; i++) {
       //
@@ -221,10 +223,10 @@ class DrawingShell {
     Vector3 ss3 = m * new Vector3(ex, sy, 0.0);
     Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
 
-    double colorR = paint.color.r / 0xff;
-    double colorG = paint.color.g / 0xff;
-    double colorB = paint.color.b / 0xff;
-    double colorA = paint.color.a / 0xff;
+    double colorR = currentColor.rf * paint.color.r / 0xff;
+    double colorG = currentColor.gf * paint.color.g / 0xff;
+    double colorB = currentColor.bf * paint.color.b / 0xff;
+    double colorA = currentColor.af * paint.color.a / 0xff;
     _innerDrawFillRect(ss1, ss2, ss3, ss4, colorR, colorG, colorB, colorA);
   }
 
@@ -246,10 +248,10 @@ class DrawingShell {
     Vector3 sz3 = m * new Vector3(ex + paint.strokeWidth, sy - paint.strokeWidth, 0.0);
     Vector3 ss4 = m * new Vector3(ex, ey, 0.0);
     Vector3 sz4 = m * new Vector3(ex + paint.strokeWidth, ey + paint.strokeWidth, 0.0);
-    double colorR = paint.color.r / 0xff;
-    double colorG = paint.color.g / 0xff;
-    double colorB = paint.color.b / 0xff;
-    double colorA = paint.color.a / 0xff;
+    double colorR = currentColor.rf *paint.color.r / 0xff;
+    double colorG = currentColor.gf *paint.color.g / 0xff;
+    double colorB = currentColor.bf *paint.color.b / 0xff;
+    double colorA = currentColor.af *paint.color.a / 0xff;
     _innerDrawFillRect(sz1, sz2, ss1, ss2, colorR, colorG, colorB, colorA);
     _innerDrawFillRect(sz2, sz4, ss2, ss4, colorR, colorG, colorB, colorA);
     _innerDrawFillRect(sz4, sz3, ss4, ss3, colorR, colorG, colorB, colorA);
@@ -279,10 +281,10 @@ class DrawingShell {
     v2 = m * v2;
     v3 = m * v3;
     v4 = m * v4;
-    double colorR = paint.color.r / 0xff;
-    double colorG = paint.color.g / 0xff;
-    double colorB = paint.color.b / 0xff;
-    double colorA = paint.color.a / 0xff;
+    double colorR = currentColor.rf * paint.color.r / 0xff;
+    double colorG = currentColor.gf * paint.color.g / 0xff;
+    double colorB = currentColor.bf * paint.color.b / 0xff;
+    double colorA = currentColor.af * paint.color.a / 0xff;
     _innerDrawFillRect(v1, v2, v3, v4, colorR, colorG, colorB, colorA);
   }
 
@@ -366,16 +368,17 @@ class DrawingShell {
 
     int b = flVert.length ~/ 2;
 
-    double colorR = 1.0;
-    double colorG = 1.0;
-    double colorB = 1.0;
-    double colorA = 1.0;
+    double colorR = currentColor.rf;
+    double colorG = currentColor.gf;
+    double colorB = currentColor.bf;
+    double colorA = currentColor.af;
     if(paint != null) {
-      colorR = paint.color.r / 0xff;
-      colorG = paint.color.g / 0xff;
-      colorB = paint.color.b / 0xff;
-      colorA = paint.color.a / 0xff;
+      colorR *= paint.color.r / 0xff;
+      colorG *= paint.color.g / 0xff;
+      colorB *= paint.color.b / 0xff;
+      colorA *= paint.color.a / 0xff;
     }
+
     flVert.addAll([
       ss1.x, ss1.y, // 7
       ss2.x, ss2.y, // 1
