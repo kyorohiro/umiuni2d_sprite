@@ -60,9 +60,9 @@ abstract class Canvas {
     ds.drawOval(rect, paint);
   }
 
-  void drawImageRect(Image image, Rect src, Rect dst, {CanvasTransform transform, List<Object> cache: null}) {
+  void drawImageRect(Image image, Rect src, Rect dst, {CanvasTransform transform, Paint paint:null, List<Object> cache: null}) {
     ds.currentMatrix = mats.last;
-    ds.drawImageRect(image, src, dst, transform:transform);
+    ds.drawImageRect(image, src, dst, transform:transform, paint: paint);
   }
 
   void drawRect(Rect rect, Paint paint, {List<Object> cache: null}){

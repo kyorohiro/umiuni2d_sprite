@@ -309,7 +309,7 @@ class DrawingShell {
 
 
   void drawImageRect(Image image, Rect src, Rect dst,
-      {CanvasTransform transform: CanvasTransform.NONE,
+      {CanvasTransform transform: CanvasTransform.NONE,Paint paint:null,
         List<Object> cache: null}) {
     if (flImg != image) {
       flush();
@@ -365,16 +365,17 @@ class DrawingShell {
 
 
     int b = flVert.length ~/ 2;
-    /*
-    double colorR = 0.0;//paint.color.r / 0xff;
-    double colorG = 0.0;//paint.color.g / 0xff;
-    double colorB = 0.0;//paint.color.b / 0xff;
-    double colorA = 0.0;//paint.color.a / 0xff;
-*/
+
     double colorR = 1.0;
     double colorG = 1.0;
     double colorB = 1.0;
     double colorA = 1.0;
+    if(paint != null) {
+      colorR = paint.color.r / 0xff;
+      colorG = paint.color.g / 0xff;
+      colorB = paint.color.b / 0xff;
+      colorA = paint.color.a / 0xff;
+    }
     flVert.addAll([
       ss1.x, ss1.y, // 7
       ss2.x, ss2.y, // 1

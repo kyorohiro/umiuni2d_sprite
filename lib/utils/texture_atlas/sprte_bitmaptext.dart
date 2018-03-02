@@ -15,14 +15,21 @@ class BitmapTextSprite extends Sprite {
   String message;
   double size;
 
-  BitmapTextSprite(Image image, String jsonSrc, {this.rect, this.size:25.0, this.message=""}) :super.empty() {
+  Color color;
+
+  BitmapTextSprite(Image image, String jsonSrc,
+      {this.rect, this.size:25.0, this.message="", this.color:null}) :super.empty() {
     this._image = image;
     this._jsonSrc = jsonSrc;
     this._sheet = new SpriteSheet.bitmapfont(jsonSrc, image.w, image.h);
   }
 
   void onPaint(Stage stage, Canvas canvas) {
+    Paint p = null;
+    if(color != null) {
+      p = new Paint(color: color);
+    }
     sheet.drawText(canvas, image, message, size,
-        rect: _rect, orientation: BitmapFontInfoType.horizontal);
+        rect: _rect, orientation: BitmapFontInfoType.horizontal,paint: p);
   }
 }
