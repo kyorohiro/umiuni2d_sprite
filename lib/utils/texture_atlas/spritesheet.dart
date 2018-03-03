@@ -20,19 +20,19 @@ abstract class SpriteSheet {
     }
   }
 
-  void drawText(Canvas canvas, Image image, String text, double size,
+  Point drawText(Canvas canvas, Image image, String text, double size,
       {Rect rect: null,
         BitmapFontInfoType orientation: BitmapFontInfoType.horizontal,
         double margine: 5.0,
         Paint paint}) {
     if(orientation == BitmapFontInfoType.horizontal) {
-      drawTextHorizontal(canvas, image, text, size, rect: rect, margine: margine,paint: paint);
+      return drawTextHorizontal(canvas, image, text, size, rect: rect, margine: margine,paint: paint);
     } else {
-      drawTextVertical(canvas, image, text, size, rect: rect, margine: margine, paint:paint);
+      return drawTextVertical(canvas, image, text, size, rect: rect, margine: margine, paint:paint);
     }
   }
 
-  void drawTextHorizontal(Canvas canvas, Image image, String text, double size, {Rect rect: null, double margine: 5.0,Paint paint}) {
+  Point drawTextHorizontal(Canvas canvas, Image image, String text, double size, {Rect rect: null, double margine: 5.0,Paint paint}) {
     if(rect == null) {
       rect = new Rect(0.0,0.0,10000.0,10000.0);
     }
@@ -59,10 +59,11 @@ abstract class SpriteSheet {
       canvas.drawImageRect(image, d.srcRect, dstRect, paint: paint);
       x += dstRect.w + margine * d.srcRect.w / d.srcRect.h;
     }
+    return new Point(x, y+size + margine);
   }
 
   //
-  void drawTextVertical(Canvas canvas, Image image, String text, double size,
+  Point drawTextVertical(Canvas canvas, Image image, String text, double size,
       {Rect rect: null, double margine: 5.0, Paint paint}) {
     if(rect == null) {
       rect = new Rect(0.0,0.0,10000.0,10000.0);
@@ -99,6 +100,7 @@ abstract class SpriteSheet {
       canvas.drawImageRect(image, d.srcRect, dstRect, paint: paint);
       y += dstRect.h + margine;
     }
+    return new Point(x, y);
   }
 }
 

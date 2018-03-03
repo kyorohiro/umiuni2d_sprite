@@ -6,6 +6,7 @@ class Sprite extends DisplayObjectEx {
   double centerY;
 
 
+  double focusMergine = 1.2;
   double _x = 0.0;
   double _y = 0.0;
   double _rotation = 0.0;
@@ -22,6 +23,8 @@ class Sprite extends DisplayObjectEx {
 
   double get spriteW => _spriteW;
   double get spriteH => _spriteH;
+  void set spriteW(double v){_spriteW = v;}
+  void set spriteH(double v){_spriteH = v;}
 
   //
   double get w => _spriteW * scaleX;
@@ -84,7 +87,7 @@ class Sprite extends DisplayObjectEx {
   List<Rect> _dst = [];
   List<CanvasTransform> _trans = [];
 
-  Sprite.empty({double w:0.0, double h:0.0, Color color}) {
+  Sprite.empty({double w:0.0, double h:0.0, Color color, this.centerX, this.centerY}) {
     _spriteH = h;
     _spriteW = w;
     _src.add(new Rect(0.0, 0.0, w, h));
@@ -139,8 +142,10 @@ class Sprite extends DisplayObjectEx {
   bool checkFocus(double localX, double localY) {
     updateMat();
 //    print("--${localX}:${localY}, ${image.w}:${image.h}a");
-    if (0 < localX && localX < _spriteW) {
-      if (0 < localY && localY < _spriteH) {
+    double w = (_spriteW*focusMergine-spriteW)/2;
+    double h = (_spriteH*focusMergine-spriteH)/2;
+    if (-w < localX && localX < _spriteW+w) {
+      if (-h+0 < localY && localY < _spriteH+h) {
         return true;
       }
     }

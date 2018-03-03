@@ -28,11 +28,11 @@ class ExButton extends ExFunc {
     }
   }
 
+  //int i=0;
   bool onTouch(Stage stage, int id, StagePointerType type, double globalX, globalY){
     Vector3 v = stage.getCurrentPositionOnDisplayObject(globalX, globalY);
     double x = v.x;
     double y = v.y;
-    //print("########## (${x},${y})   (${globalX},${globalY} ${target.mat.storage[12]} ${target.mat.storage[13]})");
     bool ret = false;
     switch (type) {
       case StagePointerType.DOWN:
@@ -67,6 +67,14 @@ class ExButton extends ExFunc {
         isTouch = false;
         isFocus = false;
     }
+    /*
+    i++;
+    if(isFocus == true) {
+      print("isFocus YES ${i}");
+    } else {
+      print("isFocus NO ${i}");
+    }*/
+
     if (exclusiveTouch == true) {
       return ret;
     } else {
