@@ -197,7 +197,7 @@ class DrawingShell {
   }
 
   void drawRect(Rect rect, Paint paint, {List<Object> cache: null}) {
-    if (flImg != null) {
+    if (flImg != null || flVert.length > 50) {
       flush();
     }
     if (paint.style == PaintStyle.fill) {
