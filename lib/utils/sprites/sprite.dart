@@ -107,16 +107,19 @@ class Sprite extends DisplayObjectEx {
     _spriteW = image.w.toDouble();
     _spriteH = image.h.toDouble();
 
-    if (centerX == null) {
-      centerX = _spriteW / 2;
-    }
-    if (centerY == null) {
-      centerY = _spriteH / 2;
-    }
-    if (srcs != null && dsts != null && transforms != null && srcs.length == dsts.length && srcs.length == transforms.length && srcs.length > 0) {
+
+    if (srcs != null && dsts != null  && srcs.length == dsts.length  && srcs.length > 0) {
+      //&& transforms != null && srcs.length == transforms.length
       _src.addAll(srcs);
       _dst.addAll(dsts);
-      _trans.addAll(transforms);
+      if(transforms != null && srcs.length == transforms.length) {
+        _trans.addAll(transforms);
+      } else {
+        for(int i =0;i < srcs.length;i++) {
+          _trans.add(CanvasTransform.NONE);
+        }
+      }
+
     } else {
       _src.add(new Rect(0.0, 0.0, image.w.toDouble(), image.h.toDouble()));
       _dst.add(new Rect(0.0, 0.0, image.w.toDouble(), image.h.toDouble()));
@@ -124,6 +127,13 @@ class Sprite extends DisplayObjectEx {
     }
     if(dsts.length > 0 && srcs.length > 0) {
       currentFrameID = 0;
+    }
+
+    if (centerX == null) {
+      centerX = _dst[0].w / 2;
+    }
+    if (centerY == null) {
+      centerY = _dst[0].h / 2;
     }
   }
 
@@ -165,6 +175,7 @@ class Sprite extends DisplayObjectEx {
     if(image == null) {
       canvas.drawRect(_dst[id], new Paint(color: color));
     } else {
+//      canvas.drawRect(_dst[id], new Paint(color: color));
       canvas.drawImageRect(image, _src[id], _dst[id], transform: _trans[id]);
     }
 
