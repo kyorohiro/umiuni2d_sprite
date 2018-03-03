@@ -18,3 +18,8 @@ https://github.com/kyorohiro/umiuni2d_sprite_html5
 
 https://github.com/kyorohiro/umiuni2d_sprite_example
 
+
+### DEMO
+##### Wonder Minon
+
+https://github.com/kyorohiro/wonder_minon
