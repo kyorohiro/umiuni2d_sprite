@@ -37,7 +37,10 @@ part 'utils/texture_atlas/bitmapfont.dart';
 part 'utils/sprites/bitmaptext.dart';
 part 'utils/sprites/displayobject_ex.dart';
 part 'utils/sprites/exbutton.dart';
+part 'utils/sprites/exblink.dart';
+
 part 'utils/sprites/joystick.dart';
+
 
 
 abstract class Platform {

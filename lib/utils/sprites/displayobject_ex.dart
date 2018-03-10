@@ -45,14 +45,14 @@ class DisplayObjectEx extends DisplayObject {
   @override
   void onPaintStart(Stage stage, Canvas canvas){
     for(ExFunc b in extensions) {
-      b.onPaint(stage, canvas);
+      b.onPaintStart(stage, canvas);
     }
   }
 
   @override
   void onPaintEnd(Stage stage, Canvas canvas){
     for(ExFunc b in extensions) {
-      b.onPaint(stage, canvas);
+      b.onPaintEnd(stage, canvas);
     }
   }
 
