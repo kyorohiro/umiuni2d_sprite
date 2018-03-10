@@ -48,6 +48,8 @@ class Color {
     ret |= ((x.bf*y.bf) * 0xff).toInt() << 0;
     this.value = ret;
   }
+
+
   @override
   bool operator ==(o) => o is Color && o.value == value;
 

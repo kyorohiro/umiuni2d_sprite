@@ -3,20 +3,48 @@ part of umiuni2d_sprite;
 
 class ExBlink extends ExFunc {
 
-  ExBlink(DisplayObject target): super(target){
+  int duration;
+
+  int _a;
+  int _r;
+  int _g;
+  int _b;
+  int _da;
+  int _dr;
+  int _dg;
+  int _db;
+
+  Color color;
+  int t =0;
+  ExBlink(DisplayObject target, {Color start:null, Color  end:null, this.duration:60}): super(target){
+    if(start == null) {
+      start = new Color.argb(0x22, 0xff, 0xff, 0xff);
+    }
+    if(end == null) {
+      end = new Color.argb(0xff, 0xff, 0xff, 0xff);
+    }
+    _a = start.a;
+    _r = start.r;
+    _g = start.g;
+    _b = start.b;
+    _da = (end.a-start.a)~/duration;
+    _dr = (end.r-start.r)~/duration;
+    _dg = (end.g-start.g)~/duration;
+    _db = (end.b-start.b)~/duration;
+
+    color = new Color(start.value);
   }
 
-  double j=0.0;
   @override
   void onPaintStart(Stage stage, Canvas canvas){
-    j+=0.02;
-    if(j>=1.0) {
-      j=0.5;
+    t+=1;
+    if(t>= duration) {
+      t =0;
     }
-    canvas.pushColor(new Color.argb(
-        (0xff*j).toInt(),
-        //0x00,
-        0xff,0xff,0xff));
+    canvas.pushColor(
+        new Color.argb(_a+_da*t,_r+_dr*t,_g+_dg*t,_b+_db*t)
+    );
+
   }
   @override
   void onPaintEnd(Stage stage, Canvas canvas){
