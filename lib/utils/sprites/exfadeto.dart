@@ -1,7 +1,6 @@
 part of umiuni2d_sprite;
 
-
-class ExBlink extends ExFunc {
+class ExFadeTo extends ExFunc {
 
   int duration;
 
@@ -16,7 +15,7 @@ class ExBlink extends ExFunc {
 
   Color color;
   int t =0;
-  ExBlink(DisplayObject target, {Color start:null, Color  end:null, this.duration:60}): super(target){
+  ExFadeTo(DisplayObject target, {Color start:null, Color  end:null, this.duration:60}): super(target){
     if(start == null) {
       start = new Color.argb(0x22, 0xff, 0xff, 0xff);
     }
@@ -37,10 +36,11 @@ class ExBlink extends ExFunc {
 
   @override
   void onPaintStart(Stage stage, Canvas canvas){
-    t+=1;
     if(t>= duration) {
       t =0;
+      return;
     }
+    t+=1;
     canvas.pushColor(
         new Color.argb(_a+_da*t,_r+_dr*t,_g+_dg*t,_b+_db*t)
     );

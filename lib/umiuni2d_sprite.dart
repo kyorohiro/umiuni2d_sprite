@@ -15,7 +15,6 @@ part 'src/paint.dart';
 part 'src/point.dart';
 part 'src/rect.dart';
 part 'src/size.dart';
-part 'package:umiuni2d_sprite/utils/sprites/sprite.dart';
 part 'src/stage.dart';
 part 'src/stage_base.dart';
 part 'src/widget.dart';
@@ -31,6 +30,8 @@ part 'package:umiuni2d_sprite/utils/sprites/scene.dart';
 
 //part 'tinygame_ex/controller/button.dart';
 //part 'tinygame_ex/controller/joystick.dart';
+part 'utils/sprites/sprite.dart';
+
 part 'utils/texture_atlas/spritesheet.dart';
 part 'utils/texture_atlas/spritesheetinfo.dart';
 part 'utils/texture_atlas/bitmapfont.dart';
@@ -38,6 +39,7 @@ part 'utils/sprites/bitmaptext.dart';
 part 'utils/sprites/displayobject_ex.dart';
 part 'utils/sprites/exbutton.dart';
 part 'utils/sprites/exblink.dart';
+part 'utils/sprites/exfadeto.dart';
 
 part 'utils/sprites/joystick.dart';
 
