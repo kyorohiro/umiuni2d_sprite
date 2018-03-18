@@ -2,7 +2,7 @@ part of umiuni2d_sprite;
 
 class ExFadeTo extends ExFunc {
 
-  int duration;
+  int _duration;
 
   int _a;
   int _r;
@@ -13,11 +13,22 @@ class ExFadeTo extends ExFunc {
   int _dg;
   int _db;
 
-  Color color;
-  int t =0;
-  ExFadeTo(DisplayObject target, {Color start:null, Color  end:null, this.duration:60}): super(target){
+  Color _color;
+  int _time =0;
+
+  ExFadeTo(DisplayObject target, {Color start:null, Color  end:null, int duration:60}): super(target){
+    this.start(start:start, end:end, duration:duration);
+  }
+
+  void start({Color start:null, Color  end:null, int duration:60}){
+    this._time = 0;
+    this._duration = duration;
     if(start == null) {
-      start = new Color.argb(0x22, 0xff, 0xff, 0xff);
+      if(_color == null) {
+        start = new Color.argb(0x22, 0xff, 0xff, 0xff);
+      } else {
+        start = _color;
+      }
     }
     if(end == null) {
       end = new Color.argb(0xff, 0xff, 0xff, 0xff);
@@ -31,18 +42,18 @@ class ExFadeTo extends ExFunc {
     _dg = (end.g-start.g)~/duration;
     _db = (end.b-start.b)~/duration;
 
-    color = new Color(start.value);
+    _color = new Color(start.value);
   }
 
   @override
   void onPaintStart(Stage stage, Canvas canvas){
-    if(t>= duration) {
-      t =0;
+    if(_time>= _duration) {
+      _time =0;
       return;
     }
-    t+=1;
+    _time+=1;
     canvas.pushColor(
-        new Color.argb(_a+_da*t,_r+_dr*t,_g+_dg*t,_b+_db*t)
+        new Color.argb(_a+_da*_time,_r+_dr*_time,_g+_dg*_time,_b+_db*_time)
     );
   }
 
