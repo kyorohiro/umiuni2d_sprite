@@ -16,6 +16,7 @@ class ExBlink extends ExFunc {
 
   Color color;
   int t =0;
+  bool isStart = true;
   ExBlink(DisplayObject target, {Color start:null, Color  end:null, this.duration:60}): super(target){
     if(start == null) {
       start = new Color.argb(0x22, 0xff, 0xff, 0xff);
@@ -35,11 +36,22 @@ class ExBlink extends ExFunc {
     color = new Color(start.value);
   }
 
+  void start() {
+    isStart = true;
+  }
+
+  void stop() {
+    isStart = false;
+  }
   @override
   void onPaintStart(Stage stage, Canvas canvas){
-    t+=1;
-    if(t>= duration) {
-      t =0;
+    if(isStart) {
+      t += 1;
+      if (t >= duration) {
+        t = 0;
+      }
+    } else {
+      t = duration;
     }
     canvas.pushColor(
         new Color.argb(_a+_da*t,_r+_dr*t,_g+_dg*t,_b+_db*t)
