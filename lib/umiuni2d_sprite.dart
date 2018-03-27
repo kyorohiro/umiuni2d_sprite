@@ -21,7 +21,7 @@ part 'src/widget.dart';
 part 'src/drawingshell.dart';
 
 part 'src/gameroot.dart';
-part 'src/gamebackground.dart';
+part 'package:umiuni2d_sprite/utils/sprites/background.dart';
 part 'package:umiuni2d_sprite/utils/sprites/scene.dart';
 //
 //

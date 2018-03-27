@@ -14,13 +14,18 @@ class ExFadeTo extends ExFunc {
   int _db;
 
   Color _color;
+  Color _start;
+  Color _end;
+
   int _time =0;
+  bool isStart = true;
 
   ExFadeTo(DisplayObject target, {Color start:null, Color  end:null, int duration:60}): super(target){
     this.start(start:start, end:end, duration:duration);
   }
 
   void start({Color start:null, Color  end:null, int duration:60}){
+    this.isStart = true;
     this._time = 0;
     this._duration = duration;
     if(start == null) {
@@ -42,19 +47,34 @@ class ExFadeTo extends ExFunc {
     _dg = (end.g-start.g)~/duration;
     _db = (end.b-start.b)~/duration;
 
+    _start = start;
+    _end = end;
     _color = new Color(start.value);
+  }
+
+  void stop() {
+    this.isStart = false;
   }
 
   @override
   void onPaintStart(Stage stage, Canvas canvas){
-    if(_time>= _duration) {
-      _time =0;
-      return;
+    if(isStart == true) {
+      if (_time >= _duration) {
+        _time = _duration;
+      } else {
+        _time += 1;
+      }
+    } else {
+      _time = _duration;
     }
-    _time+=1;
-    canvas.pushColor(
-        new Color.argb(_a+_da*_time,_r+_dr*_time,_g+_dg*_time,_b+_db*_time)
-    );
+    if(_duration < _time) {
+      _color = new Color.argb(
+          _a + _da * _time, _r + _dr * _time, _g + _dg * _time,
+          _b + _db * _time);
+      canvas.pushColor(_color);
+    } else {
+      canvas.pushColor(_end);
+    }
   }
 
   @override
