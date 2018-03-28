@@ -42,6 +42,7 @@ class Joystick extends Sprite {
     releaseMinX = 0.0;
     releaseMinY = 0.0;
   }
+
   @override
   void onPaint(Stage stage, Canvas canvas) {
     Paint p = new Paint();

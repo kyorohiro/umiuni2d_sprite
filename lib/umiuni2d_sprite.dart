@@ -40,7 +40,7 @@ part 'utils/sprites/displayobject_ex.dart';
 part 'utils/sprites/exbutton.dart';
 part 'utils/sprites/exblink.dart';
 part 'utils/sprites/exfadeto.dart';
-
+part 'utils/sprites/exdrag.dart';
 part 'utils/sprites/joystick.dart';
 
 

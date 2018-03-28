@@ -18,21 +18,27 @@ class DisplayObjectEx extends DisplayObject {
   @override
   void onChangeStageStatus(Stage stage, DisplayObject parent) {
     for(ExFunc b in extensions) {
-      b.onChangeStageStatus(stage, parent);
+      if(b.use) {
+        b.onChangeStageStatus(stage, parent);
+      }
     }
   }
 
   @override
   void onInit(Stage stage) {
     for(ExFunc b in extensions) {
-      b.onInit(stage);
+      if(b.use) {
+        b.onInit(stage);
+      }
     }
   }
 
   @override
   void onTick(Stage stage, int timeStamp) {
     for(ExFunc b in extensions) {
-      b.onTick(stage, timeStamp);
+      if(b.use) {
+        b.onTick(stage, timeStamp);
+      }
     }
   }
 
@@ -45,21 +51,27 @@ class DisplayObjectEx extends DisplayObject {
   @override
   void onPaintStart(Stage stage, Canvas canvas){
     for(ExFunc b in extensions) {
-      b.onPaintStart(stage, canvas);
+      if(b.use) {
+        b.onPaintStart(stage, canvas);
+      }
     }
   }
 
   @override
   void onPaintEnd(Stage stage, Canvas canvas){
     for(ExFunc b in extensions) {
-      b.onPaintEnd(stage, canvas);
+      if(b.use) {
+        b.onPaintEnd(stage, canvas);
+      }
     }
   }
 
   @override
   void onPaint(Stage stage, Canvas canvas){
     for(ExFunc b in extensions) {
-      b.onPaint(stage, canvas);
+      if(b.use) {
+        b.onPaint(stage, canvas);
+      }
     }
   }
 
@@ -67,7 +79,9 @@ class DisplayObjectEx extends DisplayObject {
   bool onTouch(Stage stage, int id, StagePointerType type, double globalX, globalY){
     bool ret = false;
     for(ExFunc b in extensions) {
-      ret = ret ||  b.onTouch(stage, id, type, globalX, globalY);
+      if(b.use) {
+        ret = ret || b.onTouch(stage, id, type, globalX, globalY);
+      }
     }
     return ret;
   }
@@ -75,28 +89,36 @@ class DisplayObjectEx extends DisplayObject {
   @override
   void onTouchStart(Stage stage, int id, StagePointerType type, double x, double y){
     for(ExFunc b in extensions) {
-      b.onTouchStart(stage, id, type, x, y);
+      if(b.use) {
+        b.onTouchStart(stage, id, type, x, y);
+      }
     }
   }
 
   @override
   void onTouchEnd(Stage stage, int id, StagePointerType type, double x, double y){
     for(ExFunc b in extensions) {
-      b.onTouchEnd(stage, id, type, x, y);
+      if(b.use) {
+        b.onTouchEnd(stage, id, type, x, y);
+      }
     }
   }
 
   @override
   void onUnattach() {
     for(ExFunc b in extensions) {
-      b.onUnattach();
+      if(b.use) {
+        b.onUnattach();
+      }
     }
   }
 
   @override
   void onAttach(Stage stage, DisplayObject parent) {
     for(ExFunc b in extensions) {
-      b.onAttach(stage, parent);
+      if(b.use) {
+        b.onAttach(stage, parent);
+      }
     }
   }
 }
@@ -106,6 +128,7 @@ class DisplayObjectEx extends DisplayObject {
 
 class ExFunc {
   DisplayObject target;
+  bool use = true;
   ExFunc(this.target) {
     ;
   }
