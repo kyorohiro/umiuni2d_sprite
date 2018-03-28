@@ -21,7 +21,8 @@ class SpriteSheetInfo extends SpriteSheet {
   parserFrames(String input) {
     conv.JsonDecoder d = new conv.JsonDecoder();
     Map root = d.convert(input);
-    for (Map frame in (root["frames"] as List<Map>)) {
+    print(root["frames"].toString());
+    for (var frame in (root["frames"] as List<dynamic>)) {
       SpriteSheetInfoFrame f = new SpriteSheetInfoFrame.fromMap(frame);
       frames.add(f);
       mmaps[f.name] = f;
