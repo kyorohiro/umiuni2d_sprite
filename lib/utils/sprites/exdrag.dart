@@ -13,7 +13,7 @@ class ExDrag extends ExFunc {
   EXButtonCallback onTouchCallback;
   EXButtonCheckFocus handleCheckFocus;
 
-  ExDrag(DisplayObject target,
+  ExDrag(DisplayObjectEx target,
       {this.exclusiveTouch:true, this.handleCheckFocus:null}): super(target){
   }
 
@@ -46,10 +46,8 @@ class ExDrag extends ExFunc {
         break;
       case StagePointerType.MOVE:
         if(isTouch && use==true) {
-          if(this.target is Sprite) {
-            (this.target as Sprite).x += globalX - prevX;
-            (this.target as Sprite).y += globalY - prevY;
-          }
+          (this.target as DisplayObjectEx).x += globalX - prevX;
+          (this.target as DisplayObjectEx).y += globalY - prevY;
         }
         prevX = globalX;
         prevY = globalY;

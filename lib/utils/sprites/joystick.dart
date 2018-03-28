@@ -28,7 +28,7 @@ class Joystick extends Sprite {
   double prevGX = 0.0;
   double prevGY = 0.0;
 
-  Joystick({this.size:50.0,this.minWidth:25.0}) :super.empty(){
+  Joystick({this.size:50.0,this.minWidth:25.0}) :super.empty(w:50.0, h:50.0){
 
   }
 
@@ -60,6 +60,7 @@ class Joystick extends Sprite {
 
   @override
   bool onTouch(Stage stage, int id, StagePointerType type, double globalX, globalY) {
+    super.onTouch(stage, id, type, globalX, globalY);
     Vector3 v = stage.getCurrentPositionOnDisplayObject(globalX, globalY);
     double x = v.x;
     double y = v.y;

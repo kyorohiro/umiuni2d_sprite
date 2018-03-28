@@ -2,6 +2,16 @@ part of umiuni2d_sprite;
 
 
 class DisplayObjectEx extends DisplayObject {
+
+  //
+  void set x(double v) {}
+  void set y(double v) {}
+  void set rotation(double v) {}
+  void set scaleX(double v) {}
+  void set scaleY(double v) {}
+
+  //
+  //
   List<ExFunc> extensions = [];
   addExtension(ExFunc ex) {
     extensions.add(ex);
