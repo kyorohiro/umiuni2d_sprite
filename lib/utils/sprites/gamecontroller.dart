@@ -83,22 +83,22 @@ class GameController01 extends Scene {
 
   void resetController(Stage stage){
     if (joystick != null) {
-      joystick.x = 150.0;
-      joystick.y = stage.h - 100.0;
-      joystick.scaleX = 2.2;
-      joystick.scaleY = 2.2;
+      joystick.x = 170.0;
+      joystick.y = stage.h - 80.0;
+      joystick.scaleX = 2.5;
+      joystick.scaleY = 2.5;
     }
     if (buttonL != null) {
       buttonL.x = stage.w - 130.0;
-      buttonL.y = stage.h - 70.0;
-      buttonL.scaleX = 0.2;
-      buttonL.scaleY = 0.2;
+      buttonL.y = stage.h - 80.0;
+      buttonL.scaleX = 0.25;
+      buttonL.scaleY = 0.25;
     }
     if (buttonR != null) {
       buttonR.x = stage.w - 60.0;
-      buttonR.y = stage.h - 100.0;
-      buttonR.scaleX = 0.2;
-      buttonR.scaleY = 0.2;
+      buttonR.y = stage.h - 120.0;
+      buttonR.scaleX = 0.25;
+      buttonR.scaleY = 0.25;
     }
     if (buttonStop != null) {
       buttonStop.x = stage.w / 2; //-buttonStop.w/2;

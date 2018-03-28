@@ -25,7 +25,7 @@ class DrawingShell {
   bool useLengthHAtCCoordinates;
 
   DrawingShell(this.contextWidht, this.contextHeight, { this.useLengthHAtCCoordinates:false}) {
-    numOfCircleElm = 10;
+    numOfCircleElm = 20;
   }
 
   List<double> flVert = [];
