@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c97be4a-cfb5-4e21-bf6b-f531aa2b232f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils/sprites/displayobject_ex.dart" afterPath="$PROJECT_DIR$/lib/utils/sprites/displayobject_ex.dart" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils/sprites/exdrag.dart" afterPath="$PROJECT_DIR$/lib/utils/sprites/exdrag.dart" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils/texture_atlas/bitmapfont.dart" afterPath="$PROJECT_DIR$/lib/utils/texture_atlas/bitmapfont.dart" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils/texture_atlas/spritesheetinfo.dart" afterPath="$PROJECT_DIR$/lib/utils/texture_atlas/spritesheetinfo.dart" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils/sprites/exbutton.dart" afterPath="$PROJECT_DIR$/lib/utils/sprites/exbutton.dart" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils/sprites/gamecontroller.dart" afterPath="$PROJECT_DIR$/lib/utils/sprites/gamecontroller.dart" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,21 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="joystick.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/utils/sprites/joystick.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gamecontroller.dart" pinned="false" current-in-tab="false">
+      <file leaf-file-name="gamecontroller.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/utils/sprites/gamecontroller.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state relative-caret-position="403">
+              <caret line="86" column="31" lean-forward="false" selection-start-line="86" selection-start-column="31" selection-end-line="86" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -48,11 +35,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="exdrag.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="exdrag.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/utils/sprites/exdrag.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="47" column="34" lean-forward="true" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+            <state relative-caret-position="111">
+              <caret line="47" column="34" lean-forward="false" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exbutton.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/utils/sprites/exbutton.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="34" column="11" lean-forward="false" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -72,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/lib/utils/sprites/displayobject_ex.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
-              <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+              <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -82,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/lib/src/displayobject.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="293">
-              <caret line="96" column="36" lean-forward="true" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
+              <caret line="96" column="36" lean-forward="false" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -92,7 +89,7 @@
         <entry file="file://$PROJECT_DIR$/lib/utils/texture_atlas/bitmapfont.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
-              <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+              <caret line="23" column="63" lean-forward="false" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -202,21 +199,21 @@
         <option value="$PROJECT_DIR$/lib/utils/sprites/gamebackground.dart" />
         <option value="$PROJECT_DIR$/lib/utils/sprites/background.dart" />
         <option value="$PROJECT_DIR$/lib/utils/sprites/exfadeto.dart" />
-        <option value="$PROJECT_DIR$/lib/utils/sprites/exbutton.dart" />
         <option value="$PROJECT_DIR$/lib/utils/sprites/sprite.dart" />
         <option value="$PROJECT_DIR$/lib/utils/sprites/joystick.dart" />
         <option value="$PROJECT_DIR$/lib/umiuni2d_sprite.dart" />
         <option value="$PROJECT_DIR$/lib/src/drawingshell.dart" />
-        <option value="$PROJECT_DIR$/lib/utils/sprites/gamecontroller.dart" />
         <option value="$PROJECT_DIR$/lib/utils/texture_atlas/bitmapfont.dart" />
         <option value="$PROJECT_DIR$/lib/utils/sprites/displayobject_ex.dart" />
         <option value="$PROJECT_DIR$/lib/utils/sprites/exdrag.dart" />
+        <option value="$PROJECT_DIR$/lib/utils/sprites/exbutton.dart" />
+        <option value="$PROJECT_DIR$/lib/utils/sprites/gamecontroller.dart" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="374" />
-    <option name="y" value="144" />
+    <option name="x" value="420" />
+    <option name="y" value="533" />
     <option name="width" value="1454" />
     <option name="height" value="759" />
   </component>
@@ -407,7 +404,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="374" y="144" width="1454" height="759" extended-state="0" />
+    <frame x="420" y="533" width="1454" height="759" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -415,7 +412,7 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.088" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0873494" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Dart Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32851985" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -702,14 +699,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/utils/sprites/exbutton.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="60" column="13" lean-forward="true" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/utils/sprites/sprite.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="263">
@@ -776,18 +765,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/utils/sprites/gamecontroller.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/src/displayobject.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="293">
-          <caret line="96" column="36" lean-forward="true" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
+          <caret line="96" column="36" lean-forward="false" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -795,7 +776,7 @@
     <entry file="file://$PROJECT_DIR$/lib/utils/texture_atlas/bitmapfont.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="23" column="63" lean-forward="true" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+          <caret line="23" column="63" lean-forward="false" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
           <folding />
         </state>
       </provider>
@@ -803,15 +784,31 @@
     <entry file="file://$PROJECT_DIR$/lib/utils/sprites/displayobject_ex.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+          <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/utils/sprites/exdrag.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="47" column="34" lean-forward="true" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+        <state relative-caret-position="111">
+          <caret line="47" column="34" lean-forward="false" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/sprites/exbutton.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="34" column="11" lean-forward="false" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils/sprites/gamecontroller.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="86" column="31" lean-forward="false" selection-start-line="86" selection-start-column="31" selection-end-line="86" selection-end-column="31" />
           <folding />
         </state>
       </provider>

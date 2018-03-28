@@ -7,17 +7,17 @@ typedef bool EXButtonCheckFocus(double localX, double localY);
 class ExButton extends ExFunc {
   bool isTouch = false;
   bool isFocus = false;
-  // if release joystickm input ture;
   bool registerUp = false;
-  // if down joystickm input ture;
   bool registerDown = false;
+  bool isOn = false;
+
   bool exclusiveTouch;
   String buttonName;
   EXButtonCallback onTouchCallback;
   EXButtonCheckFocus handleCheckFocus;
 
   ExButton(DisplayObject target, this.buttonName,this.onTouchCallback,
-      {this.exclusiveTouch:true, this.handleCheckFocus:null}): super(target){
+      {this.exclusiveTouch:true, this.handleCheckFocus:null,this.isOn:false}): super(target){
   }
 
   bool checkFocus(double localX, double localY) {
@@ -57,6 +57,7 @@ class ExButton extends ExFunc {
         if (isTouch == true && onTouchCallback != null) {
           registerUp = true;
           new Future(() {
+            isOn = !isOn;
             onTouchCallback(buttonName);
           });
         }
