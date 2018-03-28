@@ -42,7 +42,7 @@ part 'utils/sprites/exblink.dart';
 part 'utils/sprites/exfadeto.dart';
 part 'utils/sprites/exdrag.dart';
 part 'utils/sprites/joystick.dart';
-
+part 'utils/sprites/gamecontroller.dart';
 
 
 abstract class Platform {
