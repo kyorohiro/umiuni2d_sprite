@@ -13,8 +13,9 @@ abstract class Canvas {
 
 
   DrawingShell ds;
-  Canvas(double width, double height, bool useLengthHAtCCoordinates) {
-    ds = new DrawingShell(width, height, useLengthHAtCCoordinates: useLengthHAtCCoordinates);
+
+  Canvas(double width, double height, bool useLengthHAtCCoordinates, this.ds) {
+    ds.canvas = this;
   }
 
   List<Matrix4> mats = [new Matrix4.identity()];
@@ -80,8 +81,12 @@ abstract class Canvas {
 
   ImageShader createImageShader(Image image);
   Map<Image, ImageShader> ims = {};
+  bool OnFlush(DrawingShell ds) {
+
+  }
   flush() {
     ds.flush();
+    /*
     for(DrawingShellItem item in ds.infos) {
       if(item.flImg == null) {
         this.drawVertexWithColor(createVertices(item.flVert, item.flColor, item.flInde));
@@ -97,6 +102,7 @@ abstract class Canvas {
       }
     }
     ds.infos.clear();
+    */
   }
 
   pushMulMatrix(Matrix4 mat) {
