@@ -9,21 +9,21 @@ class LM {
   Matrix4 get last => mats[index];
 
   void add(Matrix4 mat) {
-    index++;
-    if(index < mats.length) {
-      mats[index] = mat;
+    if(index+1 < mats.length) {
+      mats[index+1] = mat;
     } else {
       mats.add(mat);
     }
+    ++index;
   }
 
-  void plus() {
-    ++index;
-    if(index<mats.length) {
-      mats[index].setIdentity();
+  Matrix4 plus() {
+    if(index+1<mats.length) {
+      mats[++index].setIdentity();
     } else {
       add(new Matrix4.identity());
     }
+    return mats[index];
   }
 
   void removeLast() {
@@ -138,7 +138,11 @@ abstract class Canvas {
   }
 
   pushMulMatrix(Matrix4 mat) {
-    mats.add(mats.last * mat);
+    //mats.add(mats.last * mat);
+    Matrix4 m1 = mats.last;
+    Matrix4 m2 = mats.plus();
+    m2.setFrom(m1);
+    m2.multiply(mat);
     updateMatrix();
   }
 
