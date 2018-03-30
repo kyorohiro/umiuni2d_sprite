@@ -166,6 +166,7 @@ class Sprite extends DisplayObjectEx {
     updateMat();
   }
 
+  Paint _p = new Paint();
   void onPaint(Stage stage, Canvas canvas) {
 
     int id = currentFrameID;
@@ -173,9 +174,9 @@ class Sprite extends DisplayObjectEx {
       id = _src.length - 1;
     }
     if(image == null) {
-      canvas.drawRect(_dst[id], new Paint(color: color));
+      _p.color = color;
+      canvas.drawRect(_dst[id], _p);
     } else {
-//      canvas.drawRect(_dst[id], new Paint(color: color));
       canvas.drawImageRect(image, _src[id], _dst[id], transform: _trans[id]);
     }
 
