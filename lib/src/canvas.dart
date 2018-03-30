@@ -74,16 +74,18 @@ abstract class Canvas {
   Vector3 cache_cliprect_v4 = new Vector3(0.0, 0.0, 0.0);
   Rect cache_cliprect_rect = new Rect(0.0, 0.0, 0.0, 0.0);
   Vertices cache_cliprect_vert = null;
+  Matrix4 cache_cliprect_mat = new Matrix4.identity();
   void clipRect(Rect rect, {Matrix4 m:null}) {
     if(m == null) {
       m = getMatrix();
     }
     ds.currentMatrix = m;
     m = ds.calcMat();
-    if(cache_cliprect_vert != null && cache_cliprect_rect == rect) {
+    if(cache_cliprect_vert != null && cache_cliprect_rect == rect && cache_cliprect_mat == m) {
       clipVertex(cache_cliprect_vert);
       return;
     }
+    cache_cliprect_mat.setFrom(m);
     cache_cliprect_rect.x = rect.x; cache_cliprect_rect.y = rect.y;
     cache_cliprect_rect.w = rect.w; cache_cliprect_rect.h = rect.h;
 
