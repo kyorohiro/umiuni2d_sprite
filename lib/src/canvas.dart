@@ -3,6 +3,40 @@ part of umiuni2d_sprite;
 
 enum CanvasTransform { NONE, ROT90, ROT180, ROT270, MIRROR, MIRROR_ROT90, MIRROR_ROT180, MIRROR_ROT270, }
 
+class LM {
+  int index = 0;
+  List<Matrix4> mats = <Matrix4>[new Matrix4.identity()];
+  Matrix4 get last => mats[index];
+
+  void add(Matrix4 mat) {
+    index++;
+    if(index < mats.length) {
+      mats[index] = mat;
+    } else {
+      mats.add(mat);
+    }
+  }
+
+  void plus() {
+    ++index;
+    if(index<mats.length) {
+      mats[index].setIdentity();
+    } else {
+      add(new Matrix4.identity());
+    }
+  }
+
+  void removeLast() {
+    if(index > 0) {
+      index--;
+    }
+  }
+
+  void clear() {
+    index = 0;
+  }
+}
+
 abstract class Canvas {
 
   void clearClip();
@@ -18,7 +52,8 @@ abstract class Canvas {
     ds.canvas = this;
   }
 
-  List<Matrix4> mats = [new Matrix4.identity()];
+  LM mats = new LM();
+
   List<Rect> stockClipRect = [];
   List<Matrix4> stockClipMat = [];
   List<Color> stockColors = [];
@@ -30,26 +65,39 @@ abstract class Canvas {
 
   }
 
+  List<double> cache_clipRect_a1 = new List<double>(8);//[v1.x, v1.y,v2.x, v2.y, v3.x, v3.y,v4.x, v4.y];
+  List<double> cache_clipRect_a2 = <double>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];//<double>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+  List<int> cache_cliprect_a3 = new List<int>(6);//=<int>[0,1,2, 0,2,3];
+  Vector3 cache_cliprect_v1 = new Vector3(0.0, 0.0, 0.0);
+  Vector3 cache_cliprect_v2 = new Vector3(0.0, 0.0, 0.0);
+  Vector3 cache_cliprect_v3 = new Vector3(0.0, 0.0, 0.0);
+  Vector3 cache_cliprect_v4 = new Vector3(0.0, 0.0, 0.0);
+  Rect cache_cliprect_rect = new Rect(0.0, 0.0, 0.0, 0.0);
+  Vertices cache_cliprect_vert = null;
   void clipRect(Rect rect, {Matrix4 m:null}) {
     if(m == null) {
       m = getMatrix();
     }
     ds.currentMatrix = m;
     m = ds.calcMat();
+    if(cache_cliprect_vert != null && cache_cliprect_rect == rect) {
+      clipVertex(cache_cliprect_vert);
+      return;
+    }
+    cache_cliprect_rect.x = rect.x; cache_cliprect_rect.y = rect.y;
+    cache_cliprect_rect.w = rect.w; cache_cliprect_rect.h = rect.h;
 
-    Vector3 v1 = new Vector3(rect.x, rect.y, 0.0);
-    Vector3 v2 = new Vector3(rect.x, rect.y + rect.h, 0.0);
-    Vector3 v3 = new Vector3(rect.x + rect.w, rect.y + rect.h, 0.0);
-    Vector3 v4 = new Vector3(rect.x + rect.w, rect.y, 0.0);
-    v1 = m * v1;
-    v2 = m * v2;
-    v3 = m * v3;
-    v4 = m * v4;
-//    canvas.clipPath(path);
-    clipVertex(createVertices(
-        <double>[v1.x, v1.y,v2.x, v2.y, v3.x, v3.y,v4.x, v4.y],
-        <double>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        <int>[0,1,2, 0,2,3]));
+    cache_cliprect_v1.setValues(rect.x, rect.y, 0.0);
+    cache_cliprect_v2.setValues(rect.x, rect.y + rect.h, 0.0);
+    cache_cliprect_v3.setValues(rect.x + rect.w, rect.y + rect.h, 0.0);
+    cache_cliprect_v4.setValues(rect.x + rect.w, rect.y, 0.0);
+    cache_cliprect_v1.applyMatrix4(m);
+    cache_cliprect_v2.applyMatrix4(m);
+    cache_cliprect_v3.applyMatrix4(m);
+    cache_cliprect_v4.applyMatrix4(m);
+    cache_clipRect_a1[0]=cache_cliprect_v1.x;cache_clipRect_a1[1]=cache_cliprect_v1.y;cache_clipRect_a1[2]=cache_cliprect_v2.x;cache_clipRect_a1[3]=cache_cliprect_v2.y;cache_clipRect_a1[4]=cache_cliprect_v3.x;cache_clipRect_a1[5]=cache_cliprect_v3.y;cache_clipRect_a1[6]=cache_cliprect_v4.x;cache_clipRect_a1[7]=cache_cliprect_v4.y;
+    cache_cliprect_a3[0]=0;cache_cliprect_a3[1]=1;cache_cliprect_a3[2]=2;cache_cliprect_a3[3]=0;cache_cliprect_a3[4]=2;cache_cliprect_a3[5]=3;
+    clipVertex(cache_cliprect_vert = createVertices(cache_clipRect_a1,cache_clipRect_a2,cache_cliprect_a3));
   }
 
   void drawLine(Point p1, Point p2, Paint paint, {List<Object> cache: null}) {
@@ -84,25 +132,9 @@ abstract class Canvas {
   bool OnFlush(DrawingShell ds) {
 
   }
+
   flush() {
     ds.flush();
-    /*
-    for(DrawingShellItem item in ds.infos) {
-      if(item.flImg == null) {
-        this.drawVertexWithColor(createVertices(item.flVert, item.flColor, item.flInde));
-      } else {
-        ImageShader s = null;
-        if(ims.containsKey(item.flImg )) {
-          s = ims[item.flImg ];
-        } else{
-          s = this.createImageShader(item.flImg);
-          ims[item.flImg] = s;
-        }
-        this.drawVertexWithImage(createVertices(item.flVert, item.flColor, item.flInde, cCoordinates: item.flTex), s);
-      }
-    }
-    ds.infos.clear();
-    */
   }
 
   pushMulMatrix(Matrix4 mat) {

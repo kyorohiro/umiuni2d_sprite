@@ -48,7 +48,7 @@ class StageBase {
   }
 
   void kickPaint(Stage stage, Canvas canvas) {
-    canvas.mats = [new Matrix4.identity()];
+    canvas.mats.clear();
     _group.paint(stage, canvas);
   }
 
