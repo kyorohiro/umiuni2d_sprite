@@ -18,7 +18,7 @@ abstract class GameWidget {
   //
   // size 2048 x 2048
   // num of 4.
-  Future<ImageShader> createImageShader(Image image);
+  //Future<ImageShader> createImageShader(Image image);
 }
 
 class ImageShader {
