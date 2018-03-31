@@ -66,7 +66,16 @@ abstract class Stage {
 
   popMatrix();
 
-  Vector3 getCurrentPositionOnDisplayObject(double globalX, double globalY) ;
+  Vector3 getCurrentPositionOnDisplayObject(double globalX, double globalY);
 
+  KeyEventButton createKeyEventButton(String key);
+
+  List<KeyEventButton> getKeyEventButtonList(String key);
 }
 
+class KeyEventButton {
+  bool registerUp = false;
+  bool registerDown = false;
+  String key;
+  KeyEventButton(this.key);
+}

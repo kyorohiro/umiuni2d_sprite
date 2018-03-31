@@ -94,4 +94,21 @@ class StageBase {
     return tmp * new Vector3(globalX, globalY, 0.0);
   }
 
+  Map<String, List<KeyEventButton>> keyEventButtons = {};
+  KeyEventButton createKeyEventButton(String key) {
+    if(!keyEventButtons.containsKey(key)){
+      keyEventButtons[key] = [];
+    }
+    KeyEventButton ret = new KeyEventButton(key);
+    keyEventButtons[key].add(ret);
+    return ret;
+  }
+
+  List<KeyEventButton> getKeyEventButtonList(String key) {
+    if(!keyEventButtons.containsKey(key)){
+      keyEventButtons[key] = [];
+    }
+    return keyEventButtons[key];
+  }
+
 }

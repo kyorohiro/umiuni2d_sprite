@@ -7,17 +7,35 @@ typedef bool EXButtonCheckFocus(double localX, double localY);
 class ExButton extends ExFunc {
   bool isTouch = false;
   bool isFocus = false;
-  bool registerUp = false;
-  bool registerDown = false;
+  bool _registerUp = false;
+  bool _registerDown = false;
   bool isOn = false;
+
+  bool get registerUp => ((keyEventButton!= null?keyEventButton.registerUp:false) || _registerUp);
+  bool get registerDown => ((keyEventButton!= null?keyEventButton.registerDown:false) || _registerDown);
+
+
+  void set registerUp(bool v) {
+    _registerUp = v;
+    if(keyEventButton != null) {
+      keyEventButton.registerUp = v;
+    }
+  }
+  void set registerDown(bool v) {
+    _registerDown = v;
+    if(keyEventButton != null) {
+      keyEventButton.registerDown = v;
+    }
+  }
 
   bool exclusiveTouch;
   String buttonName;
   EXButtonCallback onTouchCallback;
   EXButtonCheckFocus handleCheckFocus;
-
-  ExButton(DisplayObject target, this.buttonName,this.onTouchCallback,
-      {this.exclusiveTouch:true, this.handleCheckFocus:null,this.isOn:false}): super(target){
+  KeyEventButton keyEventButton;
+  ExButton(DisplayObject target, this.buttonName,this.onTouchCallback, {
+        this.exclusiveTouch:true, this.handleCheckFocus:null,
+        this.isOn:false, this.keyEventButton:null}): super(target){
   }
 
   bool checkFocus(double localX, double localY) {
@@ -27,6 +45,7 @@ class ExButton extends ExFunc {
       return handleCheckFocus(localX, localY);
     }
   }
+
 
   //int i=0;
   bool onTouch(Stage stage, int id, StagePointerType type, double globalX, globalY){
@@ -40,7 +59,7 @@ class ExButton extends ExFunc {
           ret = true;
           isTouch = true;
           isFocus = true;
-          registerDown = true;
+          _registerDown = true;
         }
         break;
       case StagePointerType.MOVE:
@@ -50,12 +69,12 @@ class ExButton extends ExFunc {
         } else {
           isTouch = false;
           isFocus = false;
-          registerUp = true;
+          _registerUp = true;
         }
         break;
       case StagePointerType.UP:
         if (isTouch == true && onTouchCallback != null) {
-          registerUp = true;
+          _registerUp = true;
           new Future(() {
             isOn = !isOn;
             onTouchCallback(buttonName);
@@ -68,13 +87,6 @@ class ExButton extends ExFunc {
         isTouch = false;
         isFocus = false;
     }
-    /*
-    i++;
-    if(isFocus == true) {
-      print("isFocus YES ${i}");
-    } else {
-      print("isFocus NO ${i}");
-    }*/
 
     if (exclusiveTouch == true) {
       return ret;

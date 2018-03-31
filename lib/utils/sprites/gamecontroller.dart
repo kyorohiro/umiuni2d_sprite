@@ -34,12 +34,14 @@ class GameController01 extends Scene {
 
     // L
     buttonL = new Sprite.empty(w:200.0,h:200.0,color:new Color.argb(0xaa, 0xaa, 0xaa, 0xff));
-    buttonL.addExtension(buttonLEx= new ExButton(buttonL, "l", (String l){}));
+    buttonL.addExtension(buttonLEx= new ExButton(buttonL, "l", (String l){},
+        keyEventButton: stage.createKeyEventButton("a")));
     buttonL.addExtension(buttonLExDrag = new ExDrag(buttonL));
     buttonLExDrag.use = false;
     // R
     buttonR = new Sprite.empty(w:200.0,h:200.0,color:new Color.argb(0xaa, 0xaa, 0xff, 0xaa));
-    buttonR.addExtension(buttonREx= new ExButton(buttonL, "r", (String l){}));
+    buttonR.addExtension(buttonREx= new ExButton(buttonL, "r", (String l){},
+        keyEventButton: stage.createKeyEventButton("b")));
     buttonR.addExtension(buttonRExDrag= new ExDrag(buttonR));
     buttonRExDrag.use = false;
 
@@ -62,9 +64,8 @@ class GameController01 extends Scene {
         buttonRExDrag.use = false;
         buttonLExDrag.use = false;
         joystickExDrag.use = false;
-
       }
-    }));
+    },keyEventButton: stage.createKeyEventButton("s")));
 
     joystick = new Joystick();
     joystick.addExtension(joystickExDrag= new ExDrag(joystick));
