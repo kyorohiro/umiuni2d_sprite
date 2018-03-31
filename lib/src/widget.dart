@@ -19,6 +19,9 @@ abstract class GameWidget {
   // size 2048 x 2048
   // num of 4.
   //Future<ImageShader> createImageShader(Image image);
+  Map<String, Object> cached;
+  Future<Image> loadAndCacheImage(String path);
+  Image getCachedImage(String path);
 }
 
 class ImageShader {

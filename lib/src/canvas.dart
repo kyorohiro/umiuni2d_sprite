@@ -44,7 +44,7 @@ abstract class Canvas {
   void drawVertexWithColor(Vertices verties, {bool hasZ:false});
   void drawVertexWithImage(Vertices verties, ImageShader imageShader);
   Vertices createVertices(List<double> positions, List<double> colors, List<int> indices, {List<double> cCoordinates});
-  int get maxTextureImages => 8;
+  int get maxTextureImages => 4;
 
   DrawingShell ds;
 
@@ -146,8 +146,10 @@ abstract class Canvas {
     } else {
       //
       Image i = _iml.removeLast();
-      ImageShader s = _ims[image];
-      s.dispose();
+      ImageShader s = _ims[i];
+      if(s != null) {
+        s.dispose();
+      }
       _ims.remove(i);
       //
       _ims[image] = createImageShader(image);

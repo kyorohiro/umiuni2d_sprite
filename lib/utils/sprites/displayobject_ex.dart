@@ -29,6 +29,7 @@ class DisplayObjectEx extends DisplayObject {
 
   @override
   void onInit(Stage stage) {
+    super.onInit(stage);
     for(ExFunc b in extensions) {
       if(b.use) {
         b.onInit(stage);
