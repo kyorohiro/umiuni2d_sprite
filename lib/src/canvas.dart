@@ -44,7 +44,7 @@ abstract class Canvas {
   void drawVertexWithColor(Vertices verties, {bool hasZ:false});
   void drawVertexWithImage(Vertices verties, ImageShader imageShader);
   Vertices createVertices(List<double> positions, List<double> colors, List<int> indices, {List<double> cCoordinates});
-  int get maxTextureImages => 4;
+  int get maxTextureImages => 8;
 
   DrawingShell ds;
 
