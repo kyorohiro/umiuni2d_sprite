@@ -1,7 +1,7 @@
 //
 // use http://sapphire-al2o3.github.io/font_tex/
 //
-part of tinygame_ex;
+part of umiuni2d_sprite;
 
 enum BitmapFontInfoType { vertical, horizontal }
 
@@ -19,9 +19,9 @@ class BitmapFontInfo {
 
   BitmapFontInfo.fromJson(String input) {
     conv.JsonDecoder d = new conv.JsonDecoder();
-    Map<String, Object> root = d.convert(input);
+    Map<String, dynamic> root = d.convert(input);
     for (String k in root.keys) {
-      Map<String, num> e = root[k];
+      Map<String, dynamic> e = root[k] as Map<String, dynamic>;
       r[int.parse(k)] = new BitmapFontInfoElem(e["u"].toDouble(), e["v"].toDouble(), e["w"].toDouble(), e["h"].toDouble(), e["vx"].toDouble(), e["vy"].toDouble(), e["vw"].toDouble(), e["vh"].toDouble());
     }
   }

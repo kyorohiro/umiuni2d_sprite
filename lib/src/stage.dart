@@ -38,7 +38,7 @@ abstract class Stage {
   DisplayObject get front;
   void set front(DisplayObject v);
 
-  GameWidget get builder;
+  GameWidget get context;
   bool animeIsStart = false;
   int animeId = 0;
   bool startable = false;
@@ -66,7 +66,17 @@ abstract class Stage {
 
   popMatrix();
 
-  Vector3 getCurrentPositionOnDisplayObject(double globalX, double globalY) ;
+  Vector3 getCurrentPositionOnDisplayObject(double globalX, double globalY);
 
+  KeyEventButton createKeyEventButton(String key);
+
+  List<KeyEventButton> getKeyEventButtonList(String key);
 }
 
+class KeyEventButton {
+  bool registerUp = false;
+  bool registerDown = false;
+  bool isTouch = false;
+  String key;
+  KeyEventButton(this.key);
+}
