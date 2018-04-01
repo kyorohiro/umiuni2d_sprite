@@ -5,15 +5,28 @@ typedef void EXButtonCallback(String id);
 typedef bool EXButtonCheckFocus(double localX, double localY);
 
 class ExButton extends ExFunc {
-  bool isTouch = false;
-  bool isFocus = false;
+  bool _isTouch = false;
+  bool _isFocus = false;
   bool _registerUp = false;
   bool _registerDown = false;
   bool isOn = false;
 
+  bool get isFocus => _isFocus;
+  bool get isTouch => ((keyEventButton!= null?keyEventButton.isTouch:false) || _isTouch);
   bool get registerUp => ((keyEventButton!= null?keyEventButton.registerUp:false) || _registerUp);
   bool get registerDown => ((keyEventButton!= null?keyEventButton.registerDown:false) || _registerDown);
 
+
+  void set isFocus(bool v) {
+    _isFocus = v;
+  }
+
+  void set isTouch(bool v) {
+    _isTouch = v;
+    if(keyEventButton != null) {
+      keyEventButton.isTouch = v;
+    }
+  }
 
   void set registerUp(bool v) {
     _registerUp = v;
@@ -57,35 +70,35 @@ class ExButton extends ExFunc {
       case StagePointerType.DOWN:
         if (checkFocus(x, y)) {
           ret = true;
-          isTouch = true;
-          isFocus = true;
+          _isTouch = true;
+          _isFocus = true;
           _registerDown = true;
         }
         break;
       case StagePointerType.MOVE:
         if (checkFocus(x, y)) {
           ret = true;
-          isFocus = true;
+          _isFocus = true;
         } else {
-          isTouch = false;
-          isFocus = false;
+          _isTouch = false;
+          _isFocus = false;
           _registerUp = true;
         }
         break;
       case StagePointerType.UP:
-        if (isTouch == true && onTouchCallback != null) {
+        if (_isTouch == true && onTouchCallback != null) {
           _registerUp = true;
           new Future(() {
             isOn = !isOn;
             onTouchCallback(buttonName);
           });
         }
-        isTouch = false;
-        isFocus = false;
+        _isTouch = false;
+        _isFocus = false;
         break;
       default:
-        isTouch = false;
-        isFocus = false;
+        _isTouch = false;
+        _isFocus = false;
     }
 
     if (exclusiveTouch == true) {

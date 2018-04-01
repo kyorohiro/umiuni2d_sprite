@@ -76,6 +76,7 @@ abstract class Stage {
 class KeyEventButton {
   bool registerUp = false;
   bool registerDown = false;
+  bool isTouch = false;
   String key;
   KeyEventButton(this.key);
 }
