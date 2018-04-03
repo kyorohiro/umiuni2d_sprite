@@ -19,7 +19,11 @@ https://github.com/kyorohiro/umiuni2d_sprite_html5
 https://github.com/kyorohiro/umiuni2d_sprite_example
 
 
-### DEMO
-##### Wonder Minon
+# Related
+## Umiuni2d 
 
-https://github.com/kyorohiro/wonder_minon
+Game package for flutter and html5. support media, io, sprite. 
+
+https://github.com/kyorohiro/umiuni2d
+
+
