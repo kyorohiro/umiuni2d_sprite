@@ -49,12 +49,9 @@ class Sprite extends DisplayObjectEx {
   int _currentFrameID = 0;
   int get currentFrameID => _currentFrameID;
   void set currentFrameID(int v) {
-    if(_dst.length < v) {
-      return;
-    }
-    _currentFrameID = v;
-    _spriteW = _dst[v].w.toDouble();
-    _spriteH = _dst[v].h.toDouble();
+    _currentFrameID = v%_dst.length;
+    _spriteW = _dst[_currentFrameID].w.toDouble();
+    _spriteH = _dst[_currentFrameID].h.toDouble();
   }
   int get numOfFrameID => _src.length;
 
