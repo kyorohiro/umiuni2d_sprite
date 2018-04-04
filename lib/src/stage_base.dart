@@ -53,9 +53,9 @@ class StageBase {
   }
 
   void kickTouch(Stage stage, int id, StagePointerType type, double x, double y) {
-    //stage.pushMulMatrix(root.mat);
+    stage.pushMulMatrix(_group.mat);
     _group.touch(stage, null, id, type, x, y);
-    //stage.popMatrix();
+    stage.popMatrix();
   }
 
   //
