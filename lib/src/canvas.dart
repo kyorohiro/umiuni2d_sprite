@@ -126,8 +126,7 @@ abstract class Canvas {
     ds.drawRect(rect, paint);
   }
 
-  clear() {
-  }
+  clear() {}
 
   ImageShader createImageShader(Image image);
   List<Image> _iml = [];
